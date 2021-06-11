@@ -2,7 +2,7 @@ import React from "react";
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Route, Redirect } from "react-router-dom";
-
+import { NavBar } from "./nav/NavBar";
 
 export const VibeHunt = () => (
     <>
@@ -12,7 +12,7 @@ export const VibeHunt = () => (
             if (localStorage.getItem("vibehunt_memberId")) {
                 return (
                 <>
-                   <h2>hiiiii!!!!</h2>
+                    <NavBar />
                 </>
             );
             } else {

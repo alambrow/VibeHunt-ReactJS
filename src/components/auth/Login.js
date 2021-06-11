@@ -39,8 +39,8 @@ export const Login = props => {
 
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>VibeHunt</h1>
                     <h2>Sign in</h2>
+                    <h3>Note: This website does not use secure authentication. Your account is not password protected.</h3>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>
                         <input ref={email} type="email"
