@@ -22,7 +22,7 @@ export const Register = (props) => {
         existingUserCheck()
             .then((userExists) => {
                 if (!userExists) {
-                    fetch("http://localhost:8088/customers", {
+                    fetch("http://localhost:8088/users", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -35,7 +35,7 @@ export const Register = (props) => {
                         .then(res => res.json())
                         .then(createdUser => {
                             if (createdUser.hasOwnProperty("id")) {
-                                localStorage.setItem("kennel_customer", createdUser.id)
+                                localStorage.setItem("vibehunt_memberId", createdUser.id)
                                 history.push("/")
                             }
                         })
