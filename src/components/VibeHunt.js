@@ -6,13 +6,14 @@ import { NavBar } from "./nav/NavBar";
 
 export const VibeHunt = () => (
     <>
-    <h1>VibeHunt</h1>
+    <NavBar />
+    
     <Route 
         render={() => {
             if (localStorage.getItem("vibehunt_memberId")) {
                 return (
                 <>
-                    <NavBar />
+                    <h1>VibeHunt, hiiii</h1>
                 </>
             );
             } else {

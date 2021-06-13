@@ -9,16 +9,16 @@ export const NavBar = (props) => {
             <Link className="navbar__link" to="/">Home</Link>
         </li>
         <li className="navbar__item">
-            <Link className="navbar__link" to="/locations">Locations</Link>
+            <Link className="navbar__link" to="/locations">Favorites</Link>
         </li>
         <li className="navbar__item">
-            <Link className="navbar__link" to="/animals">Animals</Link>
+            <Link className="navbar__link" to="/animals">Shared Venues</Link>
         </li>
         <li className="navbar__item">
                 <Link className="navbar__link" onClick={() => {
                     localStorage.removeItem("vibehunt_memberId")
                 }
-                } to="/">Logout</Link>
+                } to="/login">Logout</Link>
             </li>
         </ul>
     )
