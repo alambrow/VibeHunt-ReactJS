@@ -6,7 +6,6 @@ import "./Login.css"
 
 export const Login = props => {
     const email = useRef()
-
     const existDialog = useRef()
     const history = useHistory()
 
@@ -25,7 +24,8 @@ export const Login = props => {
                     localStorage.setItem("vibehunt_memberId", exists.id)
                     history.push("/")
                 } else {
-                    existDialog.current.showModal()
+                    document.querySelector(".form-control").style.background = "#fc7878"
+                    alert("Please enter a registered email address.")
                 }
             })
     }
@@ -48,8 +48,6 @@ export const Login = props => {
                             className="form-control"
                             placeholder="Email address"
                             required autoFocus />
-                    </fieldset>
-                    <fieldset>
                         <button type="submit">
                             Sign in
                         </button>
