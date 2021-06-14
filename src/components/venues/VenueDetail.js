@@ -7,11 +7,11 @@ export const VenueDetail = ({venueId}) => {
 
     useEffect(() => {
         getVenueInfo(venueId)
-    }, [])
+    }, [venueId])
     
     return (
         <> 
-            <div>{venueInfo}</div>
+            <div>{venueInfo.status}</div>
         </>
     )
 } 
