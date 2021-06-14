@@ -15,8 +15,13 @@ export const VenueWall = () => {
         <>
             <div className="venues__live">
                 {
+                    venueIds.join("\n")
+                }
+            </div>
+            <div className="venues__info">
+                {
                     venueIds.map(venueId => {
-                        return <VenueDetail venueId={venueId} />
+                        return <VenueDetail venueId={venueId}/>
                     })
                 }
             </div>

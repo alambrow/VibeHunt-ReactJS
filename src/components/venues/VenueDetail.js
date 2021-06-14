@@ -6,13 +6,12 @@ export const VenueDetail = ({venueId}) => {
     const [ localVenueInfo, setRemoteInfo ] = useState([])
 
     useEffect(() => {
-        debugger
         getVenueInfo(venueId)
-    }, [venueId])
+    }, [])
     
     return (
         <> 
-        <div>{venueInfo}</div>
+            <div>{venueInfo}</div>
         </>
     )
 } 

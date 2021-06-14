@@ -7,16 +7,16 @@ export const VenueInfoProvider = (props) => {
 
     const getVenueInfo = venueId => {
           
-          const params = new URLSearchParams({ 
-            'api_key_public': 'pub_729871213bc2453cbe7c684c66d4288f',
-            'venue_id': venueId.toString(),
-          });
-          
-          fetch(`https://besttime.app/api/v1/forecasts/now?${params}`, {method: 'GET'})
-            .then(res => res.json())
-            .then(data => {
-                setVenueInfo(data)
-            })
+        fetch(`https://besttime.app/api/v1/venues/${venueId.toString()}?api_key_public=pub_729871213bc2453cbe7c684c66d4288f`, {method: 'GET'})
+        .then(res => res.json())
+        .then(data => {
+            setVenueInfo(data)
+            let applicationState = {
+                data: []
+              }
+          applicationState.data = data
+          console.log(applicationState.data.venue_info.venue_name)
+        })
     }
 
     return (
