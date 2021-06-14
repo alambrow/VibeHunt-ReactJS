@@ -3,7 +3,7 @@ import { VenueInfoContext } from "./VenueInfoProvider"
 
 export const VenueDetail = ({venueId}) => {
     const { venueInfo, getVenueInfo } = useContext(VenueInfoContext)
-    const [ localVenueInfo, setRemoteInfo ] = useState([])
+    const [ localVenueInfo, setRemoteInfo ] = useState({venue_info: {}})
 
     useEffect(() => {
         getVenueInfo(venueId)
@@ -12,6 +12,7 @@ export const VenueDetail = ({venueId}) => {
     return (
         <> 
             <div>{venueInfo.status}</div>
+            
         </>
     )
 } 

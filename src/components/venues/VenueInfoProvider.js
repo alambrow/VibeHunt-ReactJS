@@ -11,11 +11,6 @@ export const VenueInfoProvider = (props) => {
         .then(res => res.json())
         .then(data => {
             setVenueInfo(data)
-        //     let applicationState = {
-        //         data: []
-        //       }
-        //   applicationState.data = data
-        //   console.log(applicationState.data.venue_info.venue_name)
         })
     }
 
