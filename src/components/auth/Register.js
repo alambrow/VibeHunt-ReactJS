@@ -1,73 +1,54 @@
-import React, { useRef } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import { useHistory } from "react-router-dom"
 import "./Login.css"
+import { UserContext } from "./UserProvider"
 
 export const Register = (props) => {
-    const firstName = useRef()
-    const lastName = useRef()
-    const email = useRef()
-    const conflictDialog = useRef()
     const history = useHistory()
-
-    const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/customers?email=${email.current.value}`)
-            .then(res => res.json())
-            .then(user => !!user.length)
-    }
-
-    const handleRegister = (e) => {
+    
+    const { users, getUsers, addUserToDatabase } = useContext(UserContext)
+    
+    useEffect(() => {
+        getUsers()
+    }, [])
+    
+    const HandleRegister = (e) => {
         e.preventDefault()
-
-
-        existingUserCheck()
-            .then((userExists) => {
-                if (!userExists) {
-                    fetch("http://localhost:8088/users", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            email: email.current.value,
-                            name: `${firstName.current.value} ${lastName.current.value}`
-                        })
-                    })
-                        .then(res => res.json())
-                        .then(createdUser => {
-                            if (createdUser.hasOwnProperty("id")) {
-                                localStorage.setItem("vibehunt_memberId", createdUser.id)
-                                history.push("/")
-                            }
-                        })
-                }
-                else {
-                    conflictDialog.current.showModal()
-                }
-            })
         
+        const userName = document.querySelector("input[name='email']").value
+        const userEmail = document.querySelector("input[name='userName']").value
+
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].userName === userName || users[i].userEmail === userEmail) {
+                alert("User with that name and/or email address already exists.")
+                return
+            }
+        }
+
+
+        const newId = (users.length + 1)
+        addUserToDatabase({
+            id: newId,
+            userEmail: document.querySelector("input[name='email']").value,
+            userName: document.querySelector("input[name='userName']").value
+        })
+        alert("Thank you for registering!")
+        localStorage.setItem("vibehunt_memberId", newId)
+        history.push("/")
     }
+
 
     return (
-        <main style={{ textAlign: "center" }}>
+        <main >
 
-            <dialog className="dialog dialog--password" ref={conflictDialog}>
-                <div>Account with that email address already exists</div>
-                <button className="button--close" onClick={e => conflictDialog.current.close()}>Close</button>
-            </dialog>
 
-            <form className="form--login" onSubmit={handleRegister}>
+            <form className="form--login" onSubmit={HandleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register for VibeHunt</h1>
                 <fieldset>
-                    <label htmlFor="firstName"> First Name </label>
-                    <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
+                    <input type="text" name="userName" className="form-control" placeholder="User name" required autoFocus />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="lastName"> Last Name </label>
-                    <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputEmail"> Email address </label>
-                    <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
+                    <input type="email" name="email" className="form-control" placeholder="Email address" required />
                 </fieldset>
                 <button type="submit"> Sign in </button>
             </form>

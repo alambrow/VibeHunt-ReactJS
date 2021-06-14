@@ -3,6 +3,7 @@ import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { Route, Redirect } from "react-router-dom";
 import { NavBar } from "./nav/NavBar";
+import { UserProvider } from "./auth/UserProvider";
 
 export const VibeHunt = () => (
     <>
@@ -22,11 +23,13 @@ export const VibeHunt = () => (
         }}
     />
 
-    <Route path="/login">
-      <Login />
-    </Route>
-    <Route path="/register">
-      <Register />
-    </Route>
+    <UserProvider>
+        <Route path="/login">
+        <Login />
+        </Route>
+        <Route path="/register">
+        <Register />
+        </Route>
+    </UserProvider>
     </>
 )

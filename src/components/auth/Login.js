@@ -42,7 +42,7 @@ export const Login = props => {
                     <h2>Sign in</h2>
                     <h3>Note: This website does not use secure authentication. Your account is not password protected.</h3>
                     <fieldset>
-                        <label htmlFor="inputEmail"> Email address </label>
+                     
                         <input ref={email} type="email"
                             id="email"
                             className="form-control"
