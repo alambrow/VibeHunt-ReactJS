@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom"
 import { UserContext } from "./UserProvider";
@@ -34,7 +34,6 @@ export const Login = (props) => {
 
     return (
         <main className="container--login">
-
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
                     <h2>Sign in</h2>

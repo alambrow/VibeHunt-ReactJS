@@ -4,6 +4,8 @@ import { Register } from "./auth/Register"
 import { Route, Redirect } from "react-router-dom";
 import { NavBar } from "./nav/NavBar";
 import { UserProvider } from "./auth/UserProvider";
+import { VenueWall } from "./venues/VenueWall";
+import { VenueIdProvider } from "./venues/VenueProvider";
 
 export const VibeHunt = () => (
     <>
@@ -15,6 +17,9 @@ export const VibeHunt = () => (
                 return (
                 <>
                     <h1>VibeHunt, hiiii</h1>
+                    <VenueIdProvider>
+                        <VenueWall />
+                    </VenueIdProvider>
                 </>
             );
             } else {
