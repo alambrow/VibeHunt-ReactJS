@@ -5,7 +5,8 @@ import { Route, Redirect } from "react-router-dom";
 import { NavBar } from "./nav/NavBar";
 import { UserProvider } from "./auth/UserProvider";
 import { VenueWall } from "./venues/VenueWall";
-import { VenueIdProvider } from "./venues/VenueProvider";
+import { VenueIdProvider } from "./venues/VenueIdProvider";
+import { VenueInfoProvider } from "./venues/VenueInfoProvider";
 
 export const VibeHunt = () => (
     <>
@@ -18,7 +19,9 @@ export const VibeHunt = () => (
                 <>
                     <h1>VibeHunt, hiiii</h1>
                     <VenueIdProvider>
-                        <VenueWall />
+                        <VenueInfoProvider>
+                            <VenueWall />
+                        </VenueInfoProvider>
                     </VenueIdProvider>
                 </>
             );
@@ -30,10 +33,10 @@ export const VibeHunt = () => (
 
     <UserProvider>
         <Route path="/login">
-        <Login />
+            <Login />
         </Route>
         <Route path="/register">
-        <Register />
+            <Register />
         </Route>
     </UserProvider>
     </>
