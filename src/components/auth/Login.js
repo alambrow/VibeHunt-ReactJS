@@ -1,49 +1,51 @@
-import React, { useRef } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom"
+import { UserContext } from "./UserProvider";
 import "./Login.css"
 
 
-export const Login = props => {
-    const email = useRef()
-    const existDialog = useRef()
+export const Login = (props) => {
     const history = useHistory()
+    const { users, getUsers } = useContext(UserContext)
 
-    const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/users?email=${email.current.value}`)
-            .then(res => res.json())
-            .then(user => user.length ? user[0] : false)
-    }
+    useEffect(() => {
+        getUsers()
+    }, [])
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        existingUserCheck()
-            .then(exists => {
-                if (exists) {
-                    localStorage.setItem("vibehunt_memberId", exists.id)
-                    history.push("/")
-                } else {
-                    document.querySelector(".form-control").style.background = "#fc7878"
-                    alert("Please enter a registered email address.")
-                }
-            })
+        const userEmail = document.querySelector("input[name='email']").value
+        const userName = document.querySelector("input[name='userName']").value
+
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].userName === userName && users[i].userEmail === userEmail) {
+                localStorage.setItem("vibehunt_memberId", users[i].id)
+                history.push("/")
+                return
+            }
+        }
+
+        document.querySelector("#userName").style.background = "#fc7878"
+        document.querySelector("#email").style.background = "#fc7878"
+        alert("Please enter a registered user name and email address.")
     }
 
     return (
         <main className="container--login">
-            <dialog className="dialog dialog--auth" ref={existDialog}>
-                <div>User does not exist</div>
-                <button className="button--close" onClick={e => existDialog.current.close()}>Close</button>
-            </dialog>
 
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
                     <h2>Sign in</h2>
                     <h3>Note: This website does not use secure authentication. Your account is not password protected.</h3>
                     <fieldset>
-                     
-                        <input ref={email} type="email"
+                    <input name="userName"
+                            id="userName"
+                            className="form-control"
+                            placeholder="User name"
+                            required autoFocus />
+                        <input name="email"
                             id="email"
                             className="form-control"
                             placeholder="Email address"

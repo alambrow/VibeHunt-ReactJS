@@ -43,7 +43,7 @@ export const Register = (props) => {
 
 
             <form className="form--login" onSubmit={HandleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Register for VibeHunt</h1>
+                <h1 className="register__banner">Register for VibeHunt</h1>
                 <fieldset>
                     <input type="text" name="userName" className="form-control" placeholder="User name" required autoFocus />
                 </fieldset>
