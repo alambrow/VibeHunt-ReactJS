@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
+import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
-
 
 export const VenueWall = () => {
     const { venueDetail, getVenueDetail } = useContext(VenueDetailContext)
@@ -14,7 +14,7 @@ export const VenueWall = () => {
             <div className="venues__info">
                 {
                     venueDetail.map(venue => {
-                        return <>{venue.name}</>
+                        return <VenueDetail venue={venue} />
                     })
                 }
             </div>
