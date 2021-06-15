@@ -4,9 +4,7 @@ import { Register } from "./auth/Register"
 import { Route, Redirect } from "react-router-dom";
 import { NavBar } from "./nav/NavBar";
 import { UserProvider } from "./auth/UserProvider";
-import { VenueWall } from "./venues/VenueWall";
-import { VenueInfoProvider } from "./venues/VenueInfoProvider";
-import { VenueDetailProvider } from "./venues/VenueDetailProvider";
+import { ApplicationViews } from "./ApplicationViews";
 
 export const VibeHunt = () => (
     <>
@@ -17,13 +15,7 @@ export const VibeHunt = () => (
                 return (
                     <>
                     <NavBar />
-                    <h1>VibeHunt, hiiii</h1>
-                    <VenueDetailProvider>
-                        <VenueInfoProvider>
-                            <VenueWall />
-                        </VenueInfoProvider>
-                    </VenueDetailProvider>
-                    
+                    <ApplicationViews />
                 </>
             );
             } else {

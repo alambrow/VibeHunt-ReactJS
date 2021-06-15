@@ -3,10 +3,16 @@ import React, {useState, createContext} from "react"
 export const VenueInfoContext = createContext()
 
 export const VenueInfoProvider = (props) => {
-    const [venueInfo, setVenueInfo] = useState({venue_info: {}})
+    const [venueInfo, setVenueInfo] = useState({})
 
     const getVenueInfo = venueId => {
-        return fetch(`https://besttime.app/api/v1/venues/${venueId.toString()}?api_key_public=pub_fdcfd27793b147a5902272b29478eef4`, {method: 'GET'})
+        
+        const params = new URLSearchParams({ 
+            'api_key_public': 'pub_fdcfd27793b147a5902272b29478eef4',
+             'venue_id': `${venueId.toString()}`,
+         });
+
+        return fetch(`https://besttime.app/api/v1/forecasts/now?${params}`, {method: 'GET'})
         .then(res => res.json())
         .then(data => {
             setVenueInfo(data)
@@ -15,7 +21,7 @@ export const VenueInfoProvider = (props) => {
 
     return (
         <VenueInfoContext.Provider value={{
-            venueInfo, getVenueInfo
+            getVenueInfo
         }}>
             {props.children}
         </VenueInfoContext.Provider>

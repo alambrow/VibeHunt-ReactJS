@@ -6,14 +6,22 @@ export const VenueDetail = ({venue}) => {
     const [localVenueState, setLocalVenueState] = useState({})
 
     useEffect(() => {
-        getVenueInfo(venue.id).then((data) => {
+        getVenueInfo(venue.venId).then((data) => {
             setLocalVenueState(data)
         })
     }, [])
+   
+
+    const venLat = venue.lat
+    const venLong = venue.long
+
+    console.log(venLat)
+    console.log(venLong)
 
     return (
-        <div className="local_state">
-            {venue.name} {venue.address}
+        <div className="venue_card">
+        <div className="venue_name">{venue.name}</div>
+        <div className="venue_address">{venue.address}</div>
         </div>
     )
 }
