@@ -1,27 +1,20 @@
 import React, { useContext, useEffect } from "react"
-import { VenueIdContext } from "./VenueIdProvider"
-import { VenueDetail } from "./VenueDetail"
+import { VenueDetailContext } from "./VenueDetailProvider"
+
 
 export const VenueWall = () => {
-    const { venueIds, getVenueIds } = useContext(VenueIdContext)
-    
-    useEffect(() => {
-        getVenueIds()
-        console.log(venueIds)
-    }, [venueIds])
+    const { venueDetail, getVenueDetail } = useContext(VenueDetailContext)
 
+    useEffect(() => {
+        getVenueDetail()
+    }, [])
   
     return (
         <>
-            <div className="venues__live">
-                {
-                    venueIds.join("\n")
-                }
-            </div>
             <div className="venues__info">
                 {
-                    venueIds.map(venueId => {
-                        return <VenueDetail venueId={venueId}/>
+                    venueDetail.map(venue => {
+                        return <>{venue.name}</>
                     })
                 }
             </div>

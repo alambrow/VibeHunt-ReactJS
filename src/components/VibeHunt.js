@@ -5,24 +5,25 @@ import { Route, Redirect } from "react-router-dom";
 import { NavBar } from "./nav/NavBar";
 import { UserProvider } from "./auth/UserProvider";
 import { VenueWall } from "./venues/VenueWall";
-import { VenueIdProvider } from "./venues/VenueIdProvider";
 import { VenueInfoProvider } from "./venues/VenueInfoProvider";
+import { VenueDetailProvider } from "./venues/VenueDetailProvider";
 
 export const VibeHunt = () => (
     <>
-    <NavBar />
     
     <Route 
         render={() => {
             if (localStorage.getItem("vibehunt_memberId")) {
                 return (
-                <>
+                    <>
+                    <NavBar />
                     <h1>VibeHunt, hiiii</h1>
-                    <VenueIdProvider>
+                    <VenueDetailProvider>
                         <VenueInfoProvider>
                             <VenueWall />
                         </VenueInfoProvider>
-                    </VenueIdProvider>
+                    </VenueDetailProvider>
+                    
                 </>
             );
             } else {
