@@ -71,7 +71,8 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_address">{venue.address}</div>
         <div className="venue_open">{localVenueState.intensity_txt}</div>
         <div className="venue_vibe">Current Vibe: {intensity_display}</div>
-        {showFavoriteButton(venue.id)}
+        <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
+        
         </div>
     )
 }
