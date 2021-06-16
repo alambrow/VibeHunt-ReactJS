@@ -14,9 +14,7 @@ export const VenueInfoProvider = (props) => {
 
         return fetch(`https://besttime.app/api/v1/forecasts/now?${params}`, {method: 'GET'})
         .then(res => res.json())
-        // .then(data => {
-        //     setVenueInfo(data)
-        // })
+
     }
 
     return (

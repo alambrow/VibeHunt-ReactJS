@@ -1,31 +1,49 @@
 import React, { useContext, useEffect, useState } from "react"
 import { VenueInfoContext } from "./VenueInfoProvider"
-import { Map } from "../map/Map"
+import { FavoritesContext } from "../favorites/FavoritesProvider"
+import "./venues.css"
+
 
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
+    const { addVenueToFavorites } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
-            debugger
             setLocalVenueState(data.analysis.hour_analysis)
         })
     }, [])
    
+    const intensity = parseInt(localVenueState.intensity_nr)
+    let intensity_display = ""
 
-    const location = {
-        address: '1600 Amphitheatre Parkway, Mountain View, california.',
-        lat: parseInt(venue.lat),
-        lng: parseInt(venue.long),
-      }
+    if (intensity <= 333) {
+        intensity_display += '***'
+    } else if (intensity <= 666) {
+        intensity_display += "**"
+    } else {
+        intensity_display += "*"
+    }
+
+    const handleFavoriteVenue = (venueId) => {
+        
+        addVenueToFavorites({
+            userId: localStorage.getItem("vibehunt_memberId"),
+            venueId: venueId
+        })
+    }
 
     return (
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
         <div className="venue_address">{venue.address}</div>
-        <div className="venue_analysis"></div>
-        <div>{localVenueState.intensity_nr}</div>
+        <div className="venue_open">{localVenueState.intensity_txt}</div>
+        <div className="venue_vibe">Current Vibe: {intensity_display}</div>
+        <button className="fav_button" onClick={event => {
+            event.preventDefault()
+            handleFavoriteVenue(venue.id)
+        }}>Favorite</button>
         </div>
     )
 }
