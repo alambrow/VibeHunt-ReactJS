@@ -6,7 +6,7 @@ import "./venues.css"
 
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
-    const { addVenueToFavorites, favorites } = useContext(FavoritesContext)
+    const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
 
     useEffect(() => {
@@ -26,11 +26,18 @@ export const VenueDetail = ({venue}) => {
         intensity_display += "*"
     }
 
+    useEffect(() => {
+        getFavorites()
+    }, [])
+
     const showFavoriteButton = (venueId) => {
         for (let i = 0; i < favorites.length; i++){
             if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
                 return (
-                    <><button>Remove Favorite</button></>
+                    <button className="unfav_button" onClick={event => {
+                        event.preventDefault()
+                        handleUnfavoriteVenue(venue.id)
+                    }}>Remove Favorite</button>
                 )
             }
         }
@@ -43,17 +50,19 @@ export const VenueDetail = ({venue}) => {
     }
 
     const handleFavoriteVenue = (venueId) => {
-        
         for (let i = 0; i < favorites.length; i++){
             if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
                 return
             }
         }
-
         addVenueToFavorites({
             userId: localStorage.getItem("vibehunt_memberId"),
             venueId: venueId
         })
+    }
+
+    const handleUnfavoriteVenue = (venueId) => {
+        removeFavorite(venueId)
     }
 
     return (

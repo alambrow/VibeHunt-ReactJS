@@ -24,9 +24,16 @@ export const FavoritesProvider = (props) => {
         .then(getFavorites)
     }
 
+    const removeFavorite = favoriteId => {
+        return fetch(`http://localhost:8088/userFavorites/${favoriteId}`, {
+            method: "DELETE"
+        })
+        .then(getFavorites)
+    }
+
     return (
         <FavoritesContext.Provider value={{
-            favorites, getFavorites, addVenueToFavorites
+            favorites, getFavorites, addVenueToFavorites, removeFavorite
         }}>
             {props.children}
         </FavoritesContext.Provider>
