@@ -6,7 +6,7 @@ import "./venues.css"
 
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
-    const { addVenueToFavorites } = useContext(FavoritesContext)
+    const { addVenueToFavorites, favorites } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
 
     useEffect(() => {
@@ -28,6 +28,12 @@ export const VenueDetail = ({venue}) => {
 
     const handleFavoriteVenue = (venueId) => {
         
+        for (let i = 0; i < favorites.length; i++){
+            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
+                return
+            }
+        }
+
         addVenueToFavorites({
             userId: localStorage.getItem("vibehunt_memberId"),
             venueId: venueId
