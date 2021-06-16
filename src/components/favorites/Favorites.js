@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { VenueDetailContext } from "../venues/VenueDetailProvider"
 import { FavoritesContext } from "./FavoritesProvider"
-
+import { VenueDetail } from "../venues/VenueDetail"
 
 
 export const Favorites = () => {
@@ -21,8 +21,6 @@ export const Favorites = () => {
         }
     }
 
-    console.log(localFavorites)
-
     useEffect(() => {
         getVenueDetail()
     }, [])
@@ -34,18 +32,15 @@ export const Favorites = () => {
             }
         }
     }
-
-    console.log(localVenueDetail)
   
     return (
         <>
         <div className="fav_venues_title">Favorited Venues</div>
-        {localVenueDetail.map(venue =>
-            <div className="venue_card">
-            <div className="venue_name">{venue.name}</div>
-            <div className="venue_address">{venue.address}</div>
-            </div>
-        )}
+            {
+                localVenueDetail.map(venue => {
+                    return <VenueDetail venue={venue} />
+                })
+            }
         </>
     )
 }
