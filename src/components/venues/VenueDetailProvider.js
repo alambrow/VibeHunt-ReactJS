@@ -13,9 +13,14 @@ export const VenueDetailProvider = (props) => {
         })
     }
 
+    const getVenueDetailById = venueId => {
+        return fetch(`http://localhost:8088/venues/${venueId}`)
+        .then(res => res.json())
+    }
+
     return (
         <VenueDetailContext.Provider value={{
-            venueDetail, getVenueDetail
+            venueDetail, getVenueDetail, getVenueDetailById
         }}>
             {props.children}
         </VenueDetailContext.Provider>

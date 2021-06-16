@@ -26,6 +26,22 @@ export const VenueDetail = ({venue}) => {
         intensity_display += "*"
     }
 
+    const showFavoriteButton = (venueId) => {
+        for (let i = 0; i < favorites.length; i++){
+            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
+                return (
+                    <><button>Remove Favorite</button></>
+                )
+            }
+        }
+        return (
+            <button className="fav_button" onClick={event => {
+                event.preventDefault()
+                handleFavoriteVenue(venue.id)
+            }}>Favorite</button>
+        )
+    }
+
     const handleFavoriteVenue = (venueId) => {
         
         for (let i = 0; i < favorites.length; i++){
@@ -46,10 +62,7 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_address">{venue.address}</div>
         <div className="venue_open">{localVenueState.intensity_txt}</div>
         <div className="venue_vibe">Current Vibe: {intensity_display}</div>
-        <button className="fav_button" onClick={event => {
-            event.preventDefault()
-            handleFavoriteVenue(venue.id)
-        }}>Favorite</button>
+        {showFavoriteButton(venue.id)}
         </div>
     )
 }
