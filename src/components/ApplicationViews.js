@@ -6,6 +6,7 @@ import { VenueDetailProvider } from "./venues/VenueDetailProvider";
 import { Favorites } from "./favorites/Favorites";
 import { FavoritesProvider } from "./favorites/FavoritesProvider";
 import { UserProvider } from "./auth/UserProvider";
+import { ShareProvider } from "./shared/ShareProvider";
 
 export const ApplicationViews = () => {
     return (
@@ -14,13 +15,15 @@ export const ApplicationViews = () => {
                 <UserProvider>
                     <VenueInfoProvider>
                         <FavoritesProvider>
-                            <Route exact path="/">
-                                <VenueWall />
-                            </Route>
-                            
-                            <Route exact path="/favorites">
-                                <Favorites />
-                            </Route>
+                            <ShareProvider>
+                                <Route exact path="/">
+                                    <VenueWall />
+                                </Route>
+                                
+                                <Route exact path="/favorites">
+                                    <Favorites />
+                                </Route>
+                            </ShareProvider>
                         </FavoritesProvider>
                     </VenueInfoProvider>
                 </UserProvider>

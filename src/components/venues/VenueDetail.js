@@ -4,6 +4,7 @@ import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./venues.css"
 import { Dropdown } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
+import { ShareContext } from "../shared/ShareProvider";
 
 
 export const VenueDetail = ({venue}) => {
@@ -11,6 +12,7 @@ export const VenueDetail = ({venue}) => {
     const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
     const { users, getUsers } = useContext(UserContext)
+    const { addShare } = useContext(ShareContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -83,7 +85,6 @@ export const VenueDetail = ({venue}) => {
             }
         }
 
-
         return (
         <Dropdown id="vibehunt_dropdown"
         onSelect={handleSelect}
@@ -109,7 +110,11 @@ export const VenueDetail = ({venue}) => {
     }
 
     const handleSelect = (e) => {
-        console.log(e)
+        addShare({
+            userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+            recipientId: parseInt(e),
+            venueId: venue.id
+        })
     }
 
     return (

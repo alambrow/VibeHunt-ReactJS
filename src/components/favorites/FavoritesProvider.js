@@ -2,7 +2,6 @@ import React, { useState, createContext } from "react";
 
 export const FavoritesContext = createContext()
 
-// TODO: finish favorites provider
 export const FavoritesProvider = (props) => {
 
     const [favorites, setFavorites] = useState([])
