@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 import "./NavBar.css"
 
-export const NavBar = (props) => {
+export const NavBar = () => {
     return (
     <nav className="nav_bar">
         <div className="vibehunt_title">

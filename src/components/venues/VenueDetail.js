@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueInfoContext } from "./VenueInfoProvider"
 import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./venues.css"
+import { Dropdown } from "react-bootstrap";
+import { UserContext } from "../auth/UserProvider";
 
 
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
     const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
+    const { users, getUsers } = useContext(UserContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -15,6 +18,14 @@ export const VenueDetail = ({venue}) => {
         })
     }, [])
    
+    useEffect(() => {
+        getFavorites()
+    }, [])
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+
     const intensity = parseInt(localVenueState.intensity_nr)
     let intensity_display = ""
 
@@ -26,9 +37,6 @@ export const VenueDetail = ({venue}) => {
         intensity_display += "*"
     }
 
-    useEffect(() => {
-        getFavorites()
-    }, [])
 
     const showFavoriteButton = (venueId) => {
         for (let i = 0; i < favorites.length; i++){
@@ -65,6 +73,45 @@ export const VenueDetail = ({venue}) => {
         removeFavorite(venueId)
     }
 
+    const displayUserDropdownItems = () => {
+
+        let usersArray = []
+
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].id != parseInt(localStorage.getItem("vibehunt_memberId"))) {
+                usersArray.push(users[i])
+            }
+        }
+
+
+        return (
+        <Dropdown id="vibehunt_dropdown"
+        onSelect={handleSelect}
+        >
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Share
+        </Dropdown.Toggle>
+            <Dropdown.Menu id="dropdown-background">
+                {usersArray.map(userListItem)}
+            </Dropdown.Menu>
+        </Dropdown>
+        )
+    }
+
+    const userListItem = (user) => {
+        return (
+            <>
+            <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}</Dropdown.Item>
+            <Dropdown.Divider />
+            </>
+            )
+        
+    }
+
+    const handleSelect = (e) => {
+        console.log(e)
+    }
+
     return (
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
@@ -72,7 +119,11 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_open">{localVenueState.intensity_txt}</div>
         <div className="venue_vibe">Current Vibe: {intensity_display}</div>
         <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
-        
+        <div className="share_dropdown">
+ 
+            {displayUserDropdownItems()}
+         
+        </div>
         </div>
     )
 }

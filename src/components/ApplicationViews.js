@@ -5,22 +5,25 @@ import { VenueInfoProvider } from "./venues/VenueInfoProvider";
 import { VenueDetailProvider } from "./venues/VenueDetailProvider";
 import { Favorites } from "./favorites/Favorites";
 import { FavoritesProvider } from "./favorites/FavoritesProvider";
+import { UserProvider } from "./auth/UserProvider";
 
 export const ApplicationViews = () => {
     return (
         <>
             <VenueDetailProvider>
-                <VenueInfoProvider>
-                    <FavoritesProvider>
-                        <Route exact path="/">
-                            <VenueWall />
-                        </Route>
-                        
-                        <Route exact path="/favorites">
-                            <Favorites />
-                        </Route>
-                    </FavoritesProvider>
-                </VenueInfoProvider>
+                <UserProvider>
+                    <VenueInfoProvider>
+                        <FavoritesProvider>
+                            <Route exact path="/">
+                                <VenueWall />
+                            </Route>
+                            
+                            <Route exact path="/favorites">
+                                <Favorites />
+                            </Route>
+                        </FavoritesProvider>
+                    </VenueInfoProvider>
+                </UserProvider>
             </VenueDetailProvider>
 
         </>
