@@ -1,5 +1,8 @@
 .venue_card {
     border: goldenrod solid 1px;
+    width: 15rem;
+    margin: 1rem 0rem 0rem 1rem;
+    padding: 1rem;
 }
 
 .fav_button {
@@ -16,4 +19,10 @@
     border-radius: 10px;
     margin: .5rem auto .5rem .5rem;
     border: none;
+}
+
+.venue_buttons_flex {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
 }

@@ -10,7 +10,7 @@ import { ShareContext } from "../shared/ShareProvider";
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
     const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
-    const [localVenueState, setLocalVenueState] = useState({})
+    const [ localVenueState, setLocalVenueState ] = useState({})
     const { users, getUsers } = useContext(UserContext)
     const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
 
@@ -113,9 +113,7 @@ export const VenueDetail = ({venue}) => {
         
     }
 
-
     const handleSelect = (e) => {
-
         for (let i = 0; i < shares.length; i++) {
             if (shares[i].recipientId === parseInt(e) && shares[i].venueId === venue.id) {
                 removeShare(shares[i].id)
@@ -123,7 +121,6 @@ export const VenueDetail = ({venue}) => {
                 return
             }
         }
-
         addShare({
             userId: parseInt(localStorage.getItem("vibehunt_memberId")),
             recipientId: parseInt(e),
@@ -132,18 +129,17 @@ export const VenueDetail = ({venue}) => {
         alert(`Shared!`)
     }
 
+    const [venAdd,] = venue.address.split(",")
+
     return (
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
-        <div className="venue_address">{venue.address}</div>
+        <div className="venue_address">{venAdd}</div>
         <div className="venue_open">{localVenueState.intensity_txt}</div>
         <div className="venue_vibe">Current Vibe: {intensity_display}</div>
-        <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
-        <div className="share_dropdown">
- 
-            {displayUserDropdownItems()}
-         
-        </div>
-        </div>
+        <div className="venue_buttons_flex">
+            <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
+            <div className="share_dropdown">{displayUserDropdownItems()}</div>
+        </div></div>
     )
 }
