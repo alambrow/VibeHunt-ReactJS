@@ -39,19 +39,22 @@ export const Register = (props) => {
 
 
     return (
-        <main >
-
-
-            <form className="form--login" onSubmit={HandleRegister}>
-                <h1 className="register__banner">Register for VibeHunt</h1>
-                <fieldset>
+        <>
+        <nav className="nav_bar">
+            <div className="vibehunt_title">
+                VibeHunt
+            </div>
+        </nav>
+        <div className="form--login">
+            <form  onSubmit={HandleRegister}>
+                <div className="signIn_banner">Register for VibeHunt</div>
+                <div className="login_flex">
                     <input type="text" name="userName" className="form-control" placeholder="User name" required autoFocus />
-                </fieldset>
-                <fieldset>
                     <input type="email" name="email" className="form-control" placeholder="Email address" required />
-                </fieldset>
-                <button type="submit"> Sign in </button>
+                </div>
+                <button type="submit"> Register </button>
             </form>
-        </main>
+        </div>
+        </>
     )
 }

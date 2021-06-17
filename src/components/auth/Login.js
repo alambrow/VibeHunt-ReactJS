@@ -33,13 +33,19 @@ export const Login = (props) => {
     }
 
     return (
+        <>
+        <nav className="nav_bar">
+        <div className="vibehunt_title">
+            VibeHunt
+        </div>
+        </nav>
         <main className="container--login">
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h2>Sign in</h2>
-                    <h3>Note: This website does not use secure authentication. Your account is not password protected.</h3>
-                    <fieldset>
-                    <input name="userName"
+                    <div className="signIn_banner">Sign in</div>
+                    <div className="signIn_note">Note: This website does not use secure authentication. Your account is not password protected.</div>
+                    <div className="login_flex">
+                        <input name="userName"
                             id="userName"
                             className="form-control"
                             placeholder="User name"
@@ -49,15 +55,16 @@ export const Login = (props) => {
                             className="form-control"
                             placeholder="Email address"
                             required autoFocus />
-                        <button type="submit">
+                    </div>
+                        <button className="signIn_button" type="submit">
                             Sign in
                         </button>
-                    </fieldset>
                 </form>
             </section>
             <section className="link--register">
-                <Link to="/register">Not a member yet?</Link>
+                <Link to="/register">Not a member?</Link>
             </section>
         </main>
+        </>
     )
 }

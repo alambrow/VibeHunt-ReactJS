@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
 
+
 export const VenueWall = () => {
     const { venueDetail, getVenueDetail } = useContext(VenueDetailContext)
 
