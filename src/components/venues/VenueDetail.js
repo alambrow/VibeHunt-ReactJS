@@ -12,7 +12,7 @@ export const VenueDetail = ({venue}) => {
     const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
     const [localVenueState, setLocalVenueState] = useState({})
     const { users, getUsers } = useContext(UserContext)
-    const { addShare } = useContext(ShareContext)
+    const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -26,6 +26,10 @@ export const VenueDetail = ({venue}) => {
 
     useEffect(() => {
         getUsers()
+    }, [])
+
+    useEffect(() => {
+        getShares()
     }, [])
 
     const intensity = parseInt(localVenueState.intensity_nr)
@@ -109,12 +113,23 @@ export const VenueDetail = ({venue}) => {
         
     }
 
+
     const handleSelect = (e) => {
+
+        for (let i = 0; i < shares.length; i++) {
+            if (shares[i].recipientId === parseInt(e) && shares[i].venueId === venue.id) {
+                removeShare(shares[i].id)
+                alert("Share deleted.")
+                return
+            }
+        }
+
         addShare({
             userId: parseInt(localStorage.getItem("vibehunt_memberId")),
             recipientId: parseInt(e),
             venueId: venue.id
         })
+        alert(`Shared!`)
     }
 
     return (

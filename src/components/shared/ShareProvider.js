@@ -22,9 +22,16 @@ export const ShareProvider = (props) => {
         .then(setShares)
     }
 
+    const removeShare = shareId => {
+        return fetch(`http://localhost:8088/sharedVenues/${shareId}`, {
+            method: "DELETE"
+        })
+        .then(getShares)
+    }
+
     return (
         <ShareContext.Provider value={{
-            shares, getShares, addShare
+            shares, getShares, addShare, removeShare
         }}>
             {props.children}
         </ShareContext.Provider>
