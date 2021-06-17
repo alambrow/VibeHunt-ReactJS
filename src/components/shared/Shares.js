@@ -1,0 +1,47 @@
+import { useContext, useEffect, useState } from "react"
+import { VenueDetailContext } from "../venues/VenueDetailProvider"
+import { VenueDetail } from "../venues/VenueDetail"
+import { ShareContext } from "./ShareProvider"
+
+export const Shares = () => {
+    const { shares, getShares } = useContext(ShareContext)
+    const { venueDetail, getVenueDetail } = useContext(VenueDetailContext)
+
+    useEffect(() => {
+        getShares()
+    }, [])
+
+    let sharedWithMe = []
+
+    for (let i = 0; i < shares.length; i++) {
+        if (shares[i].recipientId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+            sharedWithMe.push(shares[i])
+        }
+    }
+
+    useEffect(() => {
+        getVenueDetail()
+    }, [])
+
+    let localVenueDetail = []
+
+    for (let i = 0; i < sharedWithMe.length; i++) {
+        for (let n = 0; n < venueDetail.length; n++) {
+            if (sharedWithMe[i].venueId === venueDetail[n].id) {
+                localVenueDetail.push(venueDetail[n])
+            }
+        }
+    }
+
+    return (
+        <>
+        <div className="fav_venues_title">Shared with Me</div>
+            {
+                localVenueDetail.map(venue => {
+                    return <VenueDetail venue={venue} />
+                })
+            }
+        </>
+    )
+
+}

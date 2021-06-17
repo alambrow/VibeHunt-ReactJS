@@ -7,6 +7,7 @@ import { Favorites } from "./favorites/Favorites";
 import { FavoritesProvider } from "./favorites/FavoritesProvider";
 import { UserProvider } from "./auth/UserProvider";
 import { ShareProvider } from "./shared/ShareProvider";
+import { Shares } from "../components/shared/Shares";
 
 export const ApplicationViews = () => {
     return (
@@ -22,6 +23,10 @@ export const ApplicationViews = () => {
                                 
                                 <Route exact path="/favorites">
                                     <Favorites />
+                                </Route>
+
+                                <Route exact path="/shared_venues">
+                                    <Shares />
                                 </Route>
                             </ShareProvider>
                         </FavoritesProvider>
