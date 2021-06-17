@@ -11,6 +11,10 @@ export const Shares = () => {
         getShares()
     }, [])
 
+    useEffect(() => {
+        getVenueDetail()
+    }, [])
+   
     let sharedWithMe = []
 
     for (let i = 0; i < shares.length; i++) {
@@ -18,10 +22,6 @@ export const Shares = () => {
             sharedWithMe.push(shares[i])
         }
     }
-
-    useEffect(() => {
-        getVenueDetail()
-    }, [])
 
     let localVenueDetail = []
     
@@ -50,7 +50,6 @@ export const Shares = () => {
             }
         }
     }
-
 
     return (
         <>
