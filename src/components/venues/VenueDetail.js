@@ -147,15 +147,29 @@ export const VenueDetail = ({venue}) => {
 
 
     const saveNote = (venueID) => {
-        // addNote({
-        //     userId: parseInt(localStorage.getItem("vibehunt_memberId")),
-        //     venueId: venueID,
-            
-        // })
+        addNote({
+            userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+            venueId: venueID,
+            note: document.querySelector("input[name='ven_notes']").value,
+        })
     }
 
     const displaySavedNote = (venueId) => {
+        let localNotes = []
 
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId")) && notes[i].venueId === venueId) {
+                localNotes.push(notes[i])
+            }
+        }
+
+        return (
+            <>
+            {localNotes.map(noteObj => (
+                <div className="note">{noteObj.note}</div>
+            ))}
+            </>
+        )
     }
 
 
@@ -176,7 +190,11 @@ export const VenueDetail = ({venue}) => {
                 className="form-control"
                 placeholder="Notes"
             />
-            <button onClick={saveNote(venue.id)}>Append Note</button>
+            <button 
+                onClick={event => {
+                    event.preventDefault()
+                    saveNote(venue.id)
+                }}>Append Note</button>
         </form>
             <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
         </div>
