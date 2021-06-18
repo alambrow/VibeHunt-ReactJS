@@ -180,6 +180,7 @@ export const VenueDetail = ({venue}) => {
         deleteNote(noteId)
     }
 
+    
     const displaySavedNote = (venueId) => {
         let localNotes = []
 

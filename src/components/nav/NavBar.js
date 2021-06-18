@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Badge } from "react-bootstrap";
 import "./NavBar.css"
 
 export const NavBar = () => {
@@ -16,9 +16,15 @@ export const NavBar = () => {
                     <Dropdown.Menu id="dropdown-background">
                         <Dropdown.Item className="dropdown-item" href="/">Home</Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item className="dropdown-item" href="/favorites">Favorite Venues</Dropdown.Item>
+                        <Dropdown.Item className="dropdown-item" href="/favorites">
+                            Favorite Venues <Badge variant="light">9</Badge>
+                            <span className="sr-only">unread messages</span>
+                        </Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item className="dropdown-item" href="/shared_venues">Shared Venues</Dropdown.Item>
+                        <Dropdown.Item className="dropdown-item" href="/shared_venues">
+                            Shared Venues <Badge variant="light">9</Badge>
+                            <span className="sr-only">unread messages</span>
+                        </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/" onClick={() => {
                             localStorage.removeItem("vibehunt_memberId")}
