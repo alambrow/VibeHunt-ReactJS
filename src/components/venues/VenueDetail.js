@@ -122,7 +122,7 @@ export const VenueDetail = ({venue}) => {
         let htmlX = ""
         for (let i = 0; i < shares.length; i++) {
             if (shares[i].recipientId === parseInt(user.id) && shares[i].venueId) {
-                htmlX += "X"
+                htmlX += "[X]"
             }
         }
 
@@ -167,6 +167,15 @@ export const VenueDetail = ({venue}) => {
         }
     }
 
+ 
+
+    const editNote = (noteObj) => {
+        return (
+            <>
+            </>
+        )
+    }
+
     const removeNote = (noteId) => {
         deleteNote(noteId)
     }
@@ -183,13 +192,19 @@ export const VenueDetail = ({venue}) => {
         return (
             <>
             {localNotes.map(noteObj => (
-                <div className="note">{noteObj.note}
+                <div id={noteObj.id} className="note">
+                    <div className="note_txt"> {noteObj.note} 
+                <button onClick={event => {
+                    event.preventDefault()
+                    editNote(noteObj)}}>
+                    Edit
+                </button>
                 <button onClick={event => {
                     event.preventDefault()
                     removeNote(noteObj.id)}}>
                     Delete
                 </button>
-                </div>
+                </div></div>
             ))}
             </>
         )
