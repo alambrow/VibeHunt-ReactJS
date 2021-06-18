@@ -14,7 +14,7 @@ export const VenueDetail = ({venue}) => {
     const [ localVenueState, setLocalVenueState ] = useState({})
     const { users, getUsers } = useContext(UserContext)
     const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
-    const { notes, addNote, getNotes} = useContext(NoteContext)
+    const { notes, addNote, getNotes, deleteNote } = useContext(NoteContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -147,11 +147,22 @@ export const VenueDetail = ({venue}) => {
 
 
     const saveNote = (venueID) => {
-        addNote({
-            userId: parseInt(localStorage.getItem("vibehunt_memberId")),
-            venueId: venueID,
-            note: document.querySelector("input[name='ven_notes']").value,
-        })
+
+        if (document.querySelector("input[name='ven_notes']").value === "") {
+            document.querySelector("input[name='ven_notes']").style.background = "#fc7878"
+            alert("Please add a note.")
+            return
+        } else {
+            addNote({
+                userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+                venueId: venueID,
+                note: document.querySelector("input[name='ven_notes']").value,
+            })
+        }
+    }
+
+    const removeNote = (noteId) => {
+        deleteNote(noteId)
     }
 
     const displaySavedNote = (venueId) => {
@@ -166,7 +177,13 @@ export const VenueDetail = ({venue}) => {
         return (
             <>
             {localNotes.map(noteObj => (
-                <div className="note">{noteObj.note}</div>
+                <div className="note">{noteObj.note}
+                <button onClick={event => {
+                    event.preventDefault()
+                    removeNote(noteObj.id)}}>
+                    Delete
+                </button>
+                </div>
             ))}
             </>
         )
