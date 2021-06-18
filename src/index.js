@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { VibeHunt } from "./components/VibeHunt"
 import { BrowserRouter as Router } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>

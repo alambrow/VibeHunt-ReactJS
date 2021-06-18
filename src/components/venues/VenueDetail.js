@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueInfoContext } from "./VenueInfoProvider"
 import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./venues.css"
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, ProgressBar } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
@@ -39,20 +39,20 @@ export const VenueDetail = ({venue}) => {
     }, [])
 
     const intensity = parseInt(localVenueState.intensity_nr)
-    let intensity_display = ""
+    let intensity_display = 0
 
     if (intensity === 2) {
-        intensity_display += '*****'
+        intensity_display = 100
     } else if (intensity === 1) {
-        intensity_display += "****"
+        intensity_display = 80
     } else if (intensity === 0) {
-        intensity_display += "***"
+        intensity_display = 60
     } else if (intensity === -1) {
-        intensity_display += "**"
+        intensity_display = 40
     } else if (intensity === -2) {
-        intensity_display += "*"
+        intensity_display = 20
     } else {
-        intensity_display += "dead"
+        intensity_display = 5
     }
 
     // Code for Favoriting
@@ -93,7 +93,7 @@ export const VenueDetail = ({venue}) => {
     }
 
     // Code for share button/creating shares
-    const displayUserDropdownItems = (venueId) => {
+    const displayUserDropdownItems = () => {
 
         let usersArray = []
 
@@ -201,11 +201,13 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
         <div className="venue_address">{venAdd}</div>
-        <div className="venue_open">{localVenueState.intensity_txt}</div>
-        <div className="venue_vibe">Current Vibe: {intensity_display}</div>
+        <div className="venue_open">Current business: {localVenueState.intensity_txt}</div>
+        <div className="venue_vibe">
+            <ProgressBar animated now={intensity_display} variant="info" />
+        </div>
         <div className="venue_buttons_flex">
             <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
-            <div className="share_dropdown">{displayUserDropdownItems(venue.id)}</div>
+            <div className="share_dropdown">{displayUserDropdownItems()}</div>
         </div>
         <form className="venue_notes" >
             <input name="ven_notes" 
