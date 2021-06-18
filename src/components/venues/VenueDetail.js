@@ -41,12 +41,18 @@ export const VenueDetail = ({venue}) => {
     const intensity = parseInt(localVenueState.intensity_nr)
     let intensity_display = ""
 
-    if (intensity <= 333) {
-        intensity_display += '***'
-    } else if (intensity <= 666) {
+    if (intensity === 2) {
+        intensity_display += '*****'
+    } else if (intensity === 1) {
+        intensity_display += "****"
+    } else if (intensity === 0) {
+        intensity_display += "***"
+    } else if (intensity === -1) {
         intensity_display += "**"
-    } else {
+    } else if (intensity === -2) {
         intensity_display += "*"
+    } else {
+        intensity_display += "dead"
     }
 
     // Code for Favoriting
