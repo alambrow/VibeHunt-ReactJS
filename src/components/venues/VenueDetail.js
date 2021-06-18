@@ -5,6 +5,7 @@ import "./venues.css"
 import { Dropdown } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
+import { NoteContext } from "../notes/NoteProvider";
 
 
 export const VenueDetail = ({venue}) => {
@@ -13,6 +14,7 @@ export const VenueDetail = ({venue}) => {
     const [ localVenueState, setLocalVenueState ] = useState({})
     const { users, getUsers } = useContext(UserContext)
     const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
+    const { notes, addNote, getNotes} = useContext(NoteContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -32,6 +34,10 @@ export const VenueDetail = ({venue}) => {
         getShares()
     }, [])
 
+    useEffect(() => {
+        getNotes()
+    }, [])
+
     const intensity = parseInt(localVenueState.intensity_nr)
     let intensity_display = ""
 
@@ -46,7 +52,7 @@ export const VenueDetail = ({venue}) => {
     // Code for Favoriting
     const showFavoriteButton = (venueId) => {
         for (let i = 0; i < favorites.length; i++){
-            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
+            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")) {
                 return (
                     <button className="unfav_button" onClick={event => {
                         event.preventDefault()
@@ -60,18 +66,19 @@ export const VenueDetail = ({venue}) => {
                 event.preventDefault()
                 handleFavoriteVenue(venue.id)
             }}>Favorite</button>
+          
         )
     }
 
     const handleFavoriteVenue = (venueId) => {
         for (let i = 0; i < favorites.length; i++){
-            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
+            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")) {
                 return
             }
         }
         addVenueToFavorites({
             userId: localStorage.getItem("vibehunt_memberId"),
-            venueId: venueId
+            venueId: venueId,
         })
     }
 
@@ -89,10 +96,6 @@ export const VenueDetail = ({venue}) => {
                 usersArray.push(users[i])
             }
         }
-
-
-        // Put in checkpoint to filter users by whether venue has been shared with them by current user
-        // Display users with whom venue has been shared below, with x by name to indicate delete functionality
 
         return (
         <Dropdown id="vibehunt_dropdown"
@@ -142,6 +145,20 @@ export const VenueDetail = ({venue}) => {
         alert(`Shared!`)
     }
 
+
+    const saveNote = (venueID) => {
+        // addNote({
+        //     userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+        //     venueId: venueID,
+            
+        // })
+    }
+
+    const displaySavedNote = (venueId) => {
+
+    }
+
+
     const [venAdd,] = venue.address.split(",")
     return (
         <div className="venue_card">
@@ -152,6 +169,16 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_buttons_flex">
             <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
             <div className="share_dropdown">{displayUserDropdownItems(venue.id)}</div>
-        </div></div>
+        </div>
+        <form className="venue_notes" >
+            <input name="ven_notes" 
+                id="venueNote"
+                className="form-control"
+                placeholder="Notes"
+            />
+            <button onClick={saveNote(venue.id)}>Append Note</button>
+        </form>
+            <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
+        </div>
     )
 }
