@@ -43,7 +43,7 @@ export const VenueDetail = ({venue}) => {
         intensity_display += "*"
     }
 
-
+    // Code for Favoriting
     const showFavoriteButton = (venueId) => {
         for (let i = 0; i < favorites.length; i++){
             if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
@@ -79,7 +79,8 @@ export const VenueDetail = ({venue}) => {
         removeFavorite(venueId)
     }
 
-    const displayUserDropdownItems = () => {
+    // Code for share button/creating shares
+    const displayUserDropdownItems = (venueId) => {
 
         let usersArray = []
 
@@ -88,6 +89,10 @@ export const VenueDetail = ({venue}) => {
                 usersArray.push(users[i])
             }
         }
+
+
+        // Put in checkpoint to filter users by whether venue has been shared with them by current user
+        // Display users with whom venue has been shared below, with x by name to indicate delete functionality
 
         return (
         <Dropdown id="vibehunt_dropdown"
@@ -104,9 +109,17 @@ export const VenueDetail = ({venue}) => {
     }
 
     const userListItem = (user) => {
+
+        let htmlX = ""
+        for (let i = 0; i < shares.length; i++) {
+            if (shares[i].recipientId === parseInt(user.id) && shares[i].venueId) {
+                htmlX += "X"
+            }
+        }
+
         return (
             <>
-            <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}</Dropdown.Item>
+            <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}  {htmlX}</Dropdown.Item>
             <Dropdown.Divider />
             </>
             )
@@ -130,7 +143,6 @@ export const VenueDetail = ({venue}) => {
     }
 
     const [venAdd,] = venue.address.split(",")
-
     return (
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
@@ -139,7 +151,7 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_vibe">Current Vibe: {intensity_display}</div>
         <div className="venue_buttons_flex">
             <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
-            <div className="share_dropdown">{displayUserDropdownItems()}</div>
+            <div className="share_dropdown">{displayUserDropdownItems(venue.id)}</div>
         </div></div>
     )
 }
