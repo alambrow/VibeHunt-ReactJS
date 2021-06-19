@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Dropdown, Badge } from "react-bootstrap";
+import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./NavBar.css"
+import { ShareContext } from "../shared/ShareProvider";
 
 export const NavBar = () => {
+    const { favorites, getFavorites } = useContext(FavoritesContext)
+    const { shares, getShares } = useContext(ShareContext)
+
+    useEffect(() => {
+        getFavorites()
+    }, [])
+
+    useEffect(() => {
+        getShares()
+    }, [])
+
+    let myFavorites = 0
+
+    for (let i = 0; i < favorites.length; i++){
+        if (favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))){
+            myFavorites++
+        }
+    }
+
+    let sharedWithMe = 0
+
+    for (let i = 0; i < shares.length; i++) {
+        if (shares[i].recipientId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+            sharedWithMe++
+        }
+    }
+
     return (
     <nav className="nav_bar">
         <div className="vibehunt_title">
@@ -17,12 +46,12 @@ export const NavBar = () => {
                         <Dropdown.Item className="dropdown-item" href="/">Home</Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/favorites">
-                            Favorite Venues <Badge variant="light">9</Badge>
+                            Favorite Venues <Badge variant="light">{myFavorites}</Badge>
                             <span className="sr-only">unread messages</span>
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/shared_venues">
-                            Shared Venues <Badge variant="light">9</Badge>
+                            Shared Venues <Badge variant="light">{sharedWithMe}</Badge>
                             <span className="sr-only">unread messages</span>
                         </Dropdown.Item>
                         <Dropdown.Divider />

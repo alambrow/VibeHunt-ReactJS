@@ -9,16 +9,19 @@ import { UserProvider } from "./auth/UserProvider";
 import { ShareProvider } from "./shared/ShareProvider";
 import { Shares } from "../components/shared/Shares";
 import { NoteProvider } from "./notes/NoteProvider";
+import { NavBar } from "../components/nav/NavBar";
 
 export const ApplicationViews = () => {
     return (
         <>
+
             <VenueDetailProvider>
                 <UserProvider>
                     <VenueInfoProvider>
                         <FavoritesProvider>
                             <ShareProvider>
                                 <NoteProvider>
+                                    <NavBar />
                                     <Route exact path="/">
                                         <VenueWall />
                                     </Route>

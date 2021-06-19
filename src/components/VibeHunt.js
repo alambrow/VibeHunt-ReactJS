@@ -14,7 +14,6 @@ export const VibeHunt = () => (
             if (localStorage.getItem("vibehunt_memberId")) {
                 return (
                     <>
-                    <NavBar />
                     <ApplicationViews />
                 </>
             );

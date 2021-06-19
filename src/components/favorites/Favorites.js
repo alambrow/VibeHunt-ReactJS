@@ -16,7 +16,7 @@ export const Favorites = () => {
     let localVenueDetail = []
 
     for (let i = 0; i < favorites.length; i++){
-        if (favorites[i].userId === localStorage.getItem("vibehunt_memberId")){
+        if (favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
             localFavorites.push(favorites[i].venueId)
         }
     }

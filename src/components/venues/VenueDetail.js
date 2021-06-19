@@ -57,12 +57,12 @@ export const VenueDetail = ({venue}) => {
 
     // Code for Favoriting
     const showFavoriteButton = (venueId) => {
-        for (let i = 0; i < favorites.length; i++){
-            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")) {
+        for (let i = 0; i < favorites.length; i++) {
+            if (favorites[i].venueId === venueId && favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
                     <button className="unfav_button" onClick={event => {
                         event.preventDefault()
-                        handleUnfavoriteVenue(venue.id)
+                        handleUnfavoriteVenue(parseInt(favorites[i].id))
                     }}>Remove Favorite</button>
                 )
             }
@@ -70,26 +70,30 @@ export const VenueDetail = ({venue}) => {
         return (
             <button className="fav_button" onClick={event => {
                 event.preventDefault()
-                handleFavoriteVenue(venue.id)
+                handleFavoriteVenue(venueId)
             }}>Favorite</button>
           
         )
     }
 
     const handleFavoriteVenue = (venueId) => {
-        for (let i = 0; i < favorites.length; i++){
-            if (favorites[i].venueId === venueId && favorites[i].userId === localStorage.getItem("vibehunt_memberId")) {
-                return
-            }
-        }
+
         addVenueToFavorites({
-            userId: localStorage.getItem("vibehunt_memberId"),
-            venueId: venueId,
+            userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+            venueId: parseInt(venueId)
         })
     }
 
-    const handleUnfavoriteVenue = (venueId) => {
-        removeFavorite(venueId)
+    const handleUnfavoriteVenue = (favoriteId) => {
+
+        // let favoriteId = 0
+        // debugger
+        // for (let i = 0; i < favorites.length; i++) {
+        //     if (favorites[i].venueId === venueId && favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+        //         favoriteId = favorites[i].id
+        //     }
+        // }
+        removeFavorite(favoriteId)
     }
 
     // Code for share button/creating shares
