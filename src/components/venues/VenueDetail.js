@@ -6,6 +6,7 @@ import { Dropdown, ProgressBar } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
+import { Accordion, Card } from "react-bootstrap";
 
 
 export const VenueDetail = ({venue}) => {
@@ -77,7 +78,6 @@ export const VenueDetail = ({venue}) => {
     }
 
     const handleFavoriteVenue = (venueId) => {
-
         addVenueToFavorites({
             userId: parseInt(localStorage.getItem("vibehunt_memberId")),
             venueId: parseInt(venueId)
@@ -85,14 +85,6 @@ export const VenueDetail = ({venue}) => {
     }
 
     const handleUnfavoriteVenue = (favoriteId) => {
-
-        // let favoriteId = 0
-        // debugger
-        // for (let i = 0; i < favorites.length; i++) {
-        //     if (favorites[i].venueId === venueId && favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
-        //         favoriteId = favorites[i].id
-        //     }
-        // }
         removeFavorite(favoriteId)
     }
 
@@ -152,23 +144,23 @@ export const VenueDetail = ({venue}) => {
             recipientId: parseInt(e),
             venueId: venue.id
         })
-        alert(`Shared!`)
+        alert("Shared!")
     }
 
 
     const saveNote = (venueID) => {
 
-        if (document.querySelector("input[name='ven_notes']").value === "") {
-            document.querySelector("input[name='ven_notes']").style.background = "#fc7878"
-            alert("Please add a note.")
-            return
-        } else {
+        // if (document.querySelector("input[name='ven_notes']").value === "") {
+
+        //     alert("Please add a note.")
+        //     return
+        // } else {
             addNote({
                 userId: parseInt(localStorage.getItem("vibehunt_memberId")),
                 venueId: venueID,
                 note: document.querySelector("input[name='ven_notes']").value,
             })
-        }
+        // }
     }
 
  
@@ -189,28 +181,33 @@ export const VenueDetail = ({venue}) => {
         let localNotes = []
 
         for (let i = 0; i < notes.length; i++) {
-            if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId")) && notes[i].venueId === venueId) {
+            if (notes[i].venueId === venueId) {
                 localNotes.push(notes[i])
             }
         }
 
+        
+
         return (
             <>
-            {localNotes.map(noteObj => (
-                <div id={noteObj.id} className="note">
-                    <div className="note_txt"> {noteObj.note} 
-                <button onClick={event => {
-                    event.preventDefault()
-                    editNote(noteObj)}}>
-                    Edit
-                </button>
-                <button onClick={event => {
-                    event.preventDefault()
-                    removeNote(noteObj.id)}}>
-                    Delete
-                </button>
-                </div></div>
-            ))}
+            {
+                localNotes.map((note) => {
+
+                    let Username = "nomen nescio"
+                    for (let i = 0; i < users.length; i++) {
+                        if (parseInt(users[i].id) === parseInt(note.userId)) {
+                            Username = users[i].userName
+                        }
+                    }
+
+                    return (
+                        <div className="note_card">
+                            <div className="note_user">{Username}:</div>
+                            <div className="note_txt">{note.note}</div>
+                        </div>
+                    )
+                })
+            }
             </>
         )
     }
@@ -229,19 +226,41 @@ export const VenueDetail = ({venue}) => {
             <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
             <div className="share_dropdown">{displayUserDropdownItems()}</div>
         </div>
-        <form className="venue_notes" >
-            <input name="ven_notes" 
-                id="venueNote"
-                className="form-control"
-                placeholder="Notes"
-            />
-            <button 
-                onClick={event => {
-                    event.preventDefault()
-                    saveNote(venue.id)
-                }}>Append Note</button>
-        </form>
-            <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
+            <Accordion defaultActiveKey="0">
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                    Add a note
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+
+                    <form className="venue_notes" >
+                        <input name="ven_notes" 
+                            
+                            className="form-control"
+                            placeholder="Notes"
+                        />
+                        <button 
+                            onClick={event => {
+                                event.preventDefault()
+                                saveNote(venue.id)
+                            }}>Append Note</button>
+                    </form>
+
+                    </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                    Appended notes
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="1">
+                    <Card.Body>
+                        <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
+                    </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                </Accordion>
         </div>
     )
 }

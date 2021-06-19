@@ -26,3 +26,13 @@
     flex-flow: row wrap;
     justify-content: space-around;
 }
+
+.note_card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.note_user {
+    text-decoration: underline;
+}
