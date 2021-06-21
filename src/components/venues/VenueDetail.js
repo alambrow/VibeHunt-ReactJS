@@ -284,7 +284,7 @@ export const VenueDetail = ({venue}) => {
             
             <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
                 <div className="venue_vibe">
-                    <ProgressBar animated now={intensity_display} variant="info" />
+                    <ProgressBar animated now={intensity_display} variant="warning" />
                 </div>
                 <div className="venue_buttons_flex">
                     <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
