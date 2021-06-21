@@ -36,6 +36,16 @@
     color: lavenderblush;
 }
 
+.add_note_button {
+    background-color: rgb(250, 68, 159, .8);
+    padding: .2rem .5rem;
+    border-radius: 10px;
+    border: none;
+    margin-left: 6.2rem;
+    margin-top: .5rem;
+    color: lavenderblush;
+}
+
 .venue_buttons_flex {
     display: flex;
     flex-flow: row wrap;
@@ -61,6 +71,7 @@
 
 .card-body {
     background-color: rgb(122, 94, 247, .7);
+    padding: -1rem;
 }
 
 .map_box {

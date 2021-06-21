@@ -185,6 +185,7 @@ export const VenueDetail = ({venue}) => {
                     userId: parseInt(localStorage.getItem("vibehunt_memberId")),
                     note: document.querySelector(`input[name='note_edit']`).value
                 })
+                setShow(false)
             }
         }
 
@@ -302,11 +303,10 @@ export const VenueDetail = ({venue}) => {
                                 className="form-control"
                                 placeholder="current vibe"
                             />
-                            <button 
+                            <button className="add_note_button"
                                 onClick={event => {
                                     event.preventDefault()
                                     saveNote(venue.id)
-            
                                 }}>Add Note</button>
                         </form>
 
