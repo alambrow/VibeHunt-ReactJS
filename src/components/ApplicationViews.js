@@ -10,6 +10,7 @@ import { ShareProvider } from "./shared/ShareProvider";
 import { Shares } from "../components/shared/Shares";
 import { NoteProvider } from "./notes/NoteProvider";
 import { NavBar } from "../components/nav/NavBar";
+import { MyMapComponent } from "./map/Map";
 
 export const ApplicationViews = () => {
     return (
@@ -24,6 +25,7 @@ export const ApplicationViews = () => {
                                     <NavBar />
                                     <Route exact path="/">
                                         <VenueWall />
+                                        <MyMapComponent isMarkerShown marker={{ lat: 36.1513, lng: -86.7941 }} />
                                     </Route>
                                     
                                     <Route exact path="/favorites">
