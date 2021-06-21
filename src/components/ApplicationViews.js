@@ -25,7 +25,7 @@ export const ApplicationViews = () => {
                                     <NavBar />
                                     <Route exact path="/">
                                         <VenueWall />
-                                        <MyMapComponent isMarkerShown marker={{ lat: 36.1513, lng: -86.7941 }} />
+                                        
                                     </Route>
                                     
                                     <Route exact path="/favorites">

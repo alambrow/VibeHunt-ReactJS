@@ -1,8 +1,21 @@
 .venue_card {
     border: goldenrod solid 1px;
-    width: 15rem;
+    border-radius: 10px;
+    width: 32rem;
     margin: 1rem 0rem 0rem 1rem;
     padding: 1rem;
+    background-color: rgba(66, 68, 161, 0.6);
+    color: lavenderblush;
+}
+
+.venue_map_flex {
+    display: flex;
+    flex-flow: row;
+    
+}
+
+.venue_flex_left {
+    margin-right: 1rem;
 }
 
 .fav_button {
@@ -41,8 +54,15 @@
 
 .card-header {
     font-size: small;
+    color: indigo;
+    font-weight: 600;
+    width: 14rem;
 }
 
 .card-body {
     background-color: rgb(122, 94, 247, .7);
+}
+
+.map_box {
+    border: lightcoral 1px solid;
 }

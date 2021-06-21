@@ -8,6 +8,7 @@ import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
 import { Accordion, Card, Modal, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { MyMapComponent } from "../map/Map";
 
 
 export const VenueDetail = ({venue}) => {
@@ -275,51 +276,61 @@ export const VenueDetail = ({venue}) => {
     const [venAdd,] = venue.address.split(",")
     return (
         <div className="venue_card">
-        <div className="venue_name">{venue.name}</div>
-        <div className="venue_address">{venAdd}</div>
-        <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
-        <div className="venue_vibe">
-            <ProgressBar animated now={intensity_display} variant="info" />
-        </div>
-        <div className="venue_buttons_flex">
-            <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
-            <div className="share_dropdown">{displayUserDropdownItems()}</div>
-        </div>
-            <Accordion defaultActiveKey="0">
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                    What's the vibe?
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                    <Card.Body>
+        <div className="venue_map_flex">
+            <div className="venue_flex_left">
+            <div className="venue_name">{venue.name}</div>
+            <div className="venue_address">{venAdd}</div>
+            
+            <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
+                <div className="venue_vibe">
+                    <ProgressBar animated now={intensity_display} variant="info" />
+                </div>
+                <div className="venue_buttons_flex">
+                    <div className="favorite_button">{showFavoriteButton(venue.id)}</div>
+                    <div className="share_dropdown">{displayUserDropdownItems()}</div>
+                </div>
+                <Accordion defaultActiveKey="0">
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="0">
+                        What's the vibe?
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey="0">
+                        <Card.Body>
 
-                    <form className="venue_notes" >
-                        <input name={venue.id}
-                            className="form-control"
-                            placeholder="current vibe"
-                        />
-                        <button 
-                            onClick={event => {
-                                event.preventDefault()
-                                saveNote(venue.id)
-        
-                            }}>Add Note</button>
-                    </form>
+                        <form className="venue_notes" >
+                            <input name={venue.id}
+                                className="form-control"
+                                placeholder="current vibe"
+                            />
+                            <button 
+                                onClick={event => {
+                                    event.preventDefault()
+                                    saveNote(venue.id)
+            
+                                }}>Add Note</button>
+                        </form>
 
-                    </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="1">
-                    User Notes
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="1">
-                    <Card.Body>
-                        <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
-                    </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                </Accordion>
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="1">
+                        User Notes
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey="1">
+                        <Card.Body>
+                            <div clasName="saved_notes">{displaySavedNote(venue.id)}</div>
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    </Accordion>
+                </div>
+                <div className="venue_flex_right">
+                    <div className="map_box">
+                        <MyMapComponent isMarkerShown marker={{ lat: venue.lat, lng: venue.long }} />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

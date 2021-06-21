@@ -3,10 +3,12 @@
     flex-flow: row wrap;
     justify-content: flex-end;
     background-color: rgb(110, 0, 165, .8);
+    flex-basis: 100%;
+    width: 100%;
 }
 
 .vibehunt_title {
-    flex-basis: 75%;
+    flex-basis: 60%;
     color: lavenderblush;
     font-size: 2.5rem;
 }
