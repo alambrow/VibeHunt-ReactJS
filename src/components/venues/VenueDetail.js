@@ -7,6 +7,7 @@ import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
 import { Accordion, Card } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 
 export const VenueDetail = ({venue}) => {
@@ -15,7 +16,7 @@ export const VenueDetail = ({venue}) => {
     const [ localVenueState, setLocalVenueState ] = useState({})
     const { users, getUsers } = useContext(UserContext)
     const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
-    const { notes, addNote, getNotes, deleteNote } = useContext(NoteContext)
+    const { notes, addNote, getNotes, deleteNote, updateNote } = useContext(NoteContext)
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {
@@ -38,6 +39,8 @@ export const VenueDetail = ({venue}) => {
     useEffect(() => {
         getNotes()
     }, [])
+
+    const history = useHistory()
 
     const intensity = parseInt(localVenueState.intensity_nr)
     let intensity_display = 0
@@ -149,22 +152,32 @@ export const VenueDetail = ({venue}) => {
 
 
     const saveNote = (venueID) => {
-
             addNote({
                 userId: parseInt(localStorage.getItem("vibehunt_memberId")),
                 venueId: venueID,
-                note: document.querySelector("input[name='ven_notes']").value,
+                note: document.querySelector(`input[name='${venueID}']`).value,
             })
-    
+            
     }
 
  
 
     const displayEditNoteButton = (noteObj) => {
-        return (
-            <>
-            </>
-        )
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+                return (
+                    <button className="note_delete_button" onClick={ event => {
+                        event.preventDefault()
+                        editNote(noteObj.id)
+                    }}>Edit</button>
+                )
+            }
+        }
+    }
+
+    const editNote = (noteId) => {
+        // need to re-render note display as input form, then collect data and add
+        alert("hii")
     }
 
     const displayRemoveNoteButton = (noteObj) => {
@@ -209,6 +222,7 @@ export const VenueDetail = ({venue}) => {
                         <div className="note_card">
                             <div className="note_user">{Username}:</div>
                             <div className="note_txt">{note.note}</div>
+                            <div className="note_edit_button">{displayEditNoteButton(note)}</div>
                             <div className="note_remove_button">{displayRemoveNoteButton(note)}</div>
                         </div>
                     )
@@ -241,8 +255,7 @@ export const VenueDetail = ({venue}) => {
                     <Card.Body>
 
                     <form className="venue_notes" >
-                        <input name="ven_notes" 
-                            
+                        <input name={venue.id}
                             className="form-control"
                             placeholder="Notes"
                         />
@@ -250,6 +263,7 @@ export const VenueDetail = ({venue}) => {
                             onClick={event => {
                                 event.preventDefault()
                                 saveNote(venue.id)
+                                history.push("/")
                             }}>Append Note</button>
                     </form>
 
