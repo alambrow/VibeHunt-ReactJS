@@ -150,32 +150,39 @@ export const VenueDetail = ({venue}) => {
 
     const saveNote = (venueID) => {
 
-        // if (document.querySelector("input[name='ven_notes']").value === "") {
-
-        //     alert("Please add a note.")
-        //     return
-        // } else {
             addNote({
                 userId: parseInt(localStorage.getItem("vibehunt_memberId")),
                 venueId: venueID,
                 note: document.querySelector("input[name='ven_notes']").value,
             })
-        // }
+    
     }
 
  
 
-    const editNote = (noteObj) => {
+    const displayEditNoteButton = (noteObj) => {
         return (
             <>
             </>
         )
     }
 
+    const displayRemoveNoteButton = (noteObj) => {
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+                return (
+                    <button className="note_delete_button" onClick={ event => {
+                        event.preventDefault()
+                        removeNote(noteObj.id)
+                    }}>Delete</button>
+                )
+            }
+        }
+    }
+
     const removeNote = (noteId) => {
         deleteNote(noteId)
     }
-
     
     const displaySavedNote = (venueId) => {
         let localNotes = []
@@ -185,8 +192,6 @@ export const VenueDetail = ({venue}) => {
                 localNotes.push(notes[i])
             }
         }
-
-        
 
         return (
             <>
@@ -204,6 +209,7 @@ export const VenueDetail = ({venue}) => {
                         <div className="note_card">
                             <div className="note_user">{Username}:</div>
                             <div className="note_txt">{note.note}</div>
+                            <div className="note_remove_button">{displayRemoveNoteButton(note)}</div>
                         </div>
                     )
                 })
