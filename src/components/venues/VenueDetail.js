@@ -6,7 +6,7 @@ import { Dropdown, ProgressBar } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, Modal, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 
@@ -152,11 +152,16 @@ export const VenueDetail = ({venue}) => {
 
 
     const saveNote = (venueID) => {
-            addNote({
-                userId: parseInt(localStorage.getItem("vibehunt_memberId")),
-                venueId: venueID,
-                note: document.querySelector(`input[name='${venueID}']`).value,
-            })
+            if (document.querySelector(`input[name='${venueID}']`).value === "") {
+                document.querySelector(`input[name='${venueID}']`).style.background = "#fc7878"
+                return
+            } else {
+                addNote({
+                    userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+                    venueId: venueID,
+                    note: document.querySelector(`input[name='${venueID}']`).value,
+                })
+            }
             
     }
 
@@ -166,18 +171,20 @@ export const VenueDetail = ({venue}) => {
         for (let i = 0; i < notes.length; i++) {
             if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
-                    <button className="note_delete_button" onClick={ event => {
+                    <button className="note_delete_button" onClick={event => {
                         event.preventDefault()
-                        editNote(noteObj.id)
-                    }}>Edit</button>
+                        handleShowModal()
+                    }
+                    }>Edit</button>
                 )
             }
         }
     }
 
-    const editNote = (noteId) => {
-        // need to re-render note display as input form, then collect data and add
-        alert("hii")
+    
+
+    const handleShowModal = (noteObj) => {
+   
     }
 
     const displayRemoveNoteButton = (noteObj) => {
@@ -217,11 +224,11 @@ export const VenueDetail = ({venue}) => {
                             Username = users[i].userName
                         }
                     }
-
+                    
                     return (
                         <div className="note_card">
                             <div className="note_user">{Username}:</div>
-                            <div className="note_txt">{note.note}</div>
+                            <div id={note.id} className="note_txt">{note.note}</div>
                             <div className="note_edit_button">{displayEditNoteButton(note)}</div>
                             <div className="note_remove_button">{displayRemoveNoteButton(note)}</div>
                         </div>
