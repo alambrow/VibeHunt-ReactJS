@@ -167,25 +167,57 @@ export const VenueDetail = ({venue}) => {
 
  
 
+    const [show, setShow] = useState(false);
     const displayEditNoteButton = (noteObj) => {
+
+
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+
+        const editNote = () => {
+            if (document.querySelector(`input[name='note_edit']`).value === "") {
+                return
+            } else {
+                updateNote({
+                    id: noteObj.id,
+                    venueId: noteObj.venueId,
+                    userId: parseInt(localStorage.getItem("vibehunt_memberId")),
+                    note: document.querySelector(`input[name='note_edit']`).value
+                })
+            }
+        }
+
         for (let i = 0; i < notes.length; i++) {
             if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
-                    <button className="note_delete_button" onClick={event => {
-                        event.preventDefault()
-                        handleShowModal()
-                    }
-                    }>Edit</button>
+                    <>
+                    <button className="note_delete_button" onClick={handleShow}>Edit</button>
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Body>
+                        <form className="venue_notes" >
+                            <input name="note_edit"
+                                className="form-control"
+                                placeholder={noteObj.note}
+                            />
+                        </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="primary" onClick={editNote}>
+                            Save Changes
+                        </Button>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+                    </>
                 )
             }
         }
     }
 
     
-
-    const handleShowModal = (noteObj) => {
-   
-    }
 
     const displayRemoveNoteButton = (noteObj) => {
         for (let i = 0; i < notes.length; i++) {
@@ -270,7 +302,7 @@ export const VenueDetail = ({venue}) => {
                             onClick={event => {
                                 event.preventDefault()
                                 saveNote(venue.id)
-                                history.push("/")
+        
                             }}>Append Note</button>
                     </form>
 
