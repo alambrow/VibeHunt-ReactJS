@@ -67,7 +67,7 @@ export const VenueDetail = ({venue}) => {
                     <button className="unfav_button" onClick={event => {
                         event.preventDefault()
                         handleUnfavoriteVenue(parseInt(favorites[i].id))
-                    }}>Remove Favorite</button>
+                    }}>Unfavorite</button>
                 )
             }
         }
@@ -277,7 +277,7 @@ export const VenueDetail = ({venue}) => {
         <div className="venue_card">
         <div className="venue_name">{venue.name}</div>
         <div className="venue_address">{venAdd}</div>
-        <div className="venue_open">Current business: {localVenueState.intensity_txt}</div>
+        <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
         <div className="venue_vibe">
             <ProgressBar animated now={intensity_display} variant="info" />
         </div>
@@ -288,7 +288,7 @@ export const VenueDetail = ({venue}) => {
             <Accordion defaultActiveKey="0">
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0">
-                    Add a note
+                    What's the vibe?
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                     <Card.Body>
@@ -296,14 +296,14 @@ export const VenueDetail = ({venue}) => {
                     <form className="venue_notes" >
                         <input name={venue.id}
                             className="form-control"
-                            placeholder="Notes"
+                            placeholder="current vibe"
                         />
                         <button 
                             onClick={event => {
                                 event.preventDefault()
                                 saveNote(venue.id)
         
-                            }}>Append Note</button>
+                            }}>Add Note</button>
                     </form>
 
                     </Card.Body>
@@ -311,7 +311,7 @@ export const VenueDetail = ({venue}) => {
                 </Card>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="1">
-                    Appended notes
+                    User Notes
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="1">
                     <Card.Body>

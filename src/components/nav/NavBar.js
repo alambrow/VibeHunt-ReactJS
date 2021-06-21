@@ -32,6 +32,14 @@ export const NavBar = () => {
         }
     }
 
+    let myShares = 0
+
+    for (let i = 0; i < shares.length; i++) {
+        if (shares[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+            myShares++
+        }
+    }
+
     return (
     <nav className="nav_bar">
         <div className="vibehunt_title">
@@ -47,12 +55,11 @@ export const NavBar = () => {
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/favorites">
                             Favorite Venues <Badge variant="light">{myFavorites}</Badge>
-                            <span className="sr-only">unread messages</span>
+                            
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/shared_venues">
-                            Shared Venues <Badge variant="light">{sharedWithMe}</Badge>
-                            <span className="sr-only">unread messages</span>
+                            Shared Venues <Badge variant="light">{sharedWithMe}</Badge> <Badge variant="light">{myShares}</Badge>
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/" onClick={() => {

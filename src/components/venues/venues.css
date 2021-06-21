@@ -7,18 +7,20 @@
 
 .fav_button {
     background-color: rgb(250, 68, 159, .8);
-    padding: .1rem .2rem;
+    padding: .5rem .5rem;
     border-radius: 10px;
     margin: .5rem auto .5rem .5rem;
     border: none;
+    color: lavenderblush;
 }
 
 .unfav_button {
     background-color: rgb(250, 68, 159, .8);
-    padding: .1rem .2rem;
+    padding: .5rem .5rem;
     border-radius: 10px;
     margin: .5rem auto .5rem .5rem;
     border: none;
+    color: lavenderblush;
 }
 
 .venue_buttons_flex {
@@ -35,4 +37,12 @@
 
 .note_user {
     text-decoration: underline;
+}
+
+.card-header {
+    font-size: small;
+}
+
+.card-body {
+    background-color: rgb(122, 94, 247, .7);
 }
