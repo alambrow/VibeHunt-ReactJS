@@ -41,7 +41,6 @@ export const VenueDetail = ({venue}) => {
         getNotes()
     }, [])
 
-    const history = useHistory()
 
     const intensity = parseInt(localVenueState.intensity_nr)
     let intensity_display = 0
