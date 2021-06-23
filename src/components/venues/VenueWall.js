@@ -40,7 +40,7 @@ export const VenueWall = () => {
         }
         setFilteredVenueIds(localArray)
         console.log(filteredVenueIds, "filtered ven ids")
-    }, [])
+    }, [remoteVenueInfo])
 
     useEffect(() => {
         let localArray = []
@@ -53,7 +53,7 @@ export const VenueWall = () => {
         }
         setFilteredVenueDetail(localArray)
         console.log(filteredVenueDetail, "filtered ven detail")
-    }, [])
+    }, [filteredVenueIds])
     
 
     return (

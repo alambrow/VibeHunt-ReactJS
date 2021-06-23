@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react"
 import { VenueDetailContext } from "../venues/VenueDetailProvider"
 import { VenueDetail } from "../venues/VenueDetail"
 import { ShareContext } from "./ShareProvider"
+import "./shares.css"
 
 export const Shares = () => {
     const { shares, getShares } = useContext(ShareContext)
@@ -53,18 +54,20 @@ export const Shares = () => {
 
     return (
         <>
-        <div className="fav_venues_title">Shared with Me</div>
-            {
-                localVenueDetail.map(venue => {
-                    return <VenueDetail venue={venue} />
-                })
-            }
-        <div className="fav_venues_title">Shared by Me</div>
-            {
-                mySharesArray.map(venue => {
-                    return <VenueDetail venue={venue} />
-                })
-            }
+        <div className="shares_wall">
+            <div className="fav_venues_sharedWithMe">Shared with Me</div>
+                {
+                    localVenueDetail.map(venue => {
+                        return <VenueDetail venue={venue} />
+                    })
+                }
+            <div className="fav_venues_sharedByMe">Shared by Me</div>
+                {
+                    mySharesArray.map(venue => {
+                        return <VenueDetail venue={venue} />
+                    })
+                }
+        </div>
         </>
     )
 

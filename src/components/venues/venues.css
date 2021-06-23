@@ -1,3 +1,8 @@
+.venues__info {
+    background-color: indigo;
+    padding: 1rem;
+}
+
 .venue_card {
     border: goldenrod solid 1px;
     border-radius: 10px;

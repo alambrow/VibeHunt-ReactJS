@@ -1,0 +1,12 @@
+.fav_venues_sharedWithMe {
+    background-color: indianred;
+}
+
+.fav_venues_sharedByMe {
+    background-color: gray;
+}
+
+.shares_wall {
+    background-color: indigo;
+    padding: 1rem 1rem 30rem 1rem;
+}

@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 import { VenueDetailContext } from "../venues/VenueDetailProvider"
 import { FavoritesContext } from "./FavoritesProvider"
 import { VenueDetail } from "../venues/VenueDetail"
-
+import "./favorites.css"
 
 export const Favorites = () => {
     const { favorites, getFavorites } = useContext(FavoritesContext)
@@ -35,12 +35,14 @@ export const Favorites = () => {
   
     return (
         <>
-        <div className="fav_venues_title">Favorited Venues</div>
-            {
-                localVenueDetail.map(venue => {
-                    return <VenueDetail venue={venue} />
-                })
-            }
+        <div className="favs_wall">
+            <div className="fav_venues_title">Favorited Venues</div>
+                {
+                    localVenueDetail.map(venue => {
+                        return <VenueDetail venue={venue} />
+                    })
+                }
+        </div>
         </>
     )
 }
