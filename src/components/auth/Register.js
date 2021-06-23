@@ -5,7 +5,6 @@ import { UserContext } from "./UserProvider"
 
 export const Register = (props) => {
     const history = useHistory()
-    
     const { users, getUsers, addUserToDatabase } = useContext(UserContext)
     
     useEffect(() => {

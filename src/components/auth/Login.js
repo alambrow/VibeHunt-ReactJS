@@ -5,7 +5,7 @@ import { UserContext } from "./UserProvider";
 import "./Login.css"
 
 
-export const Login = (props) => {
+export const Login = () => {
     const history = useHistory()
     const { users, getUsers } = useContext(UserContext)
 

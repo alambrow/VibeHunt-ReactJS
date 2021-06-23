@@ -7,7 +7,6 @@ import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
 import { Accordion, Card, Modal, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { MyMapComponent } from "../map/Map";
 
 
@@ -97,7 +96,7 @@ export const VenueDetail = ({venue}) => {
         let usersArray = []
 
         for (let i = 0; i < users.length; i++) {
-            if (users[i].id != parseInt(localStorage.getItem("vibehunt_memberId"))) {
+            if (users[i].id !== parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 usersArray.push(users[i])
             }
         }

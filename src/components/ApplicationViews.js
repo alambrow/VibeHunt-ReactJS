@@ -10,7 +10,6 @@ import { ShareProvider } from "./shared/ShareProvider";
 import { Shares } from "../components/shared/Shares";
 import { NoteProvider } from "./notes/NoteProvider";
 import { NavBar } from "../components/nav/NavBar";
-import { MyMapComponent } from "./map/Map";
 
 export const ApplicationViews = () => {
     return (

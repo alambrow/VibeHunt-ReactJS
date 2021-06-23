@@ -15,7 +15,7 @@ export const MyMapComponent = compose(
   withGoogleMap
 )((props) => (
   <GoogleMap 
-    defaultZoom={15}
+    defaultZoom={19}
     defaultCenter={ props.marker }
    
   >

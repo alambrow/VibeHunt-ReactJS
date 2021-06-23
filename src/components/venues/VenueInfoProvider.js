@@ -1,9 +1,8 @@
-import React, {useState, createContext} from "react"
+import React, { createContext } from "react"
 
 export const VenueInfoContext = createContext()
 
 export const VenueInfoProvider = (props) => {
-    const [venueInfo, setVenueInfo] = useState({})
 
     const getVenueInfo = venueId => {
         
