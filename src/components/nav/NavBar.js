@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Dropdown, Badge } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Dropdown, Badge, Form } from "react-bootstrap";
 import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./NavBar.css"
 import { ShareContext } from "../shared/ShareProvider";
@@ -7,6 +7,7 @@ import { ShareContext } from "../shared/ShareProvider";
 export const NavBar = () => {
     const { favorites, getFavorites } = useContext(FavoritesContext)
     const { shares, getShares } = useContext(ShareContext)
+    const [ isSwitchOn, setIsSwitchOn ] = useState(false);
 
     useEffect(() => {
         getFavorites()
