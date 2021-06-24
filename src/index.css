@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
-body {
+head {
     margin: 0rem;
     padding: 0rem;
     font-family: Ubuntu;
-    width: 100%;
-    background-color: indigo;
 }

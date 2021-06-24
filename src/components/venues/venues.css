@@ -1,43 +1,66 @@
 .custom-switch {
-    background-color: rgb(16, 3, 190);
     color: lavenderblush;
+}
+
+.vibe__toggle {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: rgb(45, 51, 59);
+}
+
+.vibe__toggle__cool {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: rgb(75, 55, 145);
+}
+
+.custom-control-label {
+    padding-right: 1rem;
 }
 
 .venues__info {
-    background-color: indigo;
-    padding: 1rem;
+    background-color: rgb(45, 51, 59);
+    padding: .1rem 1rem;
 }
 
 .venues__info__cool {
-    background-color: darkslategray;
-    padding: 1rem;
+    background-color: rgb(75, 55, 145);
+    padding: .1rem 1rem;
 }
 
 .venue_card {
-    border: goldenrod solid 1px;
+    border: rgb(255, 202, 44) solid 1px;
     border-radius: 10px;
-    width: 32rem;
-    margin: 1rem 0rem 0rem 1rem;
+    margin: .5rem 0rem .5rem 0rem;
     padding: 1rem;
-    background-color: rgba(66, 68, 161, 0.6);
+    background-color: rgba(64, 26, 136, .2);
     color: lavenderblush;
 }
 
-.venue_map_flex {
-    display: flex;
-    flex-flow: row;
-    
+.venue_name {
+    font-size: 2rem;
+    color: rgb(255, 202, 44);
 }
 
-.venue_flex_left {
-    margin-right: 1rem;
+.venue_address {
+    padding: .2rem 0rem;
+}
+
+.venue_open {
+    color: rgb(255, 202, 44);
+    padding: 0rem 0rem .5rem 0rem;
+}
+
+
+.progress-bar {
+    padding: 1rem 0rem;
 }
 
 .fav_button {
     background-color: rgb(250, 68, 159, .8);
     padding: .5rem .5rem;
     border-radius: 10px;
-    margin: .5rem auto .5rem .5rem;
+    margin: 1rem 1rem;
     border: none;
     color: lavenderblush;
 }
@@ -46,7 +69,7 @@
     background-color: rgb(250, 68, 159, .8);
     padding: .5rem .5rem;
     border-radius: 10px;
-    margin: .5rem auto .5rem .5rem;
+    margin: 1rem .5rem;
     border: none;
     color: lavenderblush;
 }
@@ -56,8 +79,7 @@
     padding: .2rem .5rem;
     border-radius: 10px;
     border: none;
-    margin-left: 6.2rem;
-    margin-top: .5rem;
+    margin: .5rem 0rem .2rem 8rem;
     color: lavenderblush;
 }
 
@@ -79,16 +101,17 @@
 
 .card-header {
     font-size: small;
-    color: indigo;
-    font-weight: 600;
-    width: 14rem;
+    color: rgb(6, 11, 69);
+    font-weight: 650;
 }
 
 .card-body {
-    background-color: rgb(122, 94, 247, .7);
+    background-color: rgb(6, 11, 69);
     padding: -1rem;
 }
 
-.map_box {
-    border: lightcoral 1px solid;
+.venue_notes {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
 }

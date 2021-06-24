@@ -8,14 +8,14 @@ export const MyMapComponent = compose(
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyDPylV5jpvE-KR6gSprY04JvFglLMuDnME&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `22rem`, width: `15rem` }} />,
+    containerElement: <div style={{ height: `18rem`, width: `19.2rem` }} />,
     mapElement: <div style={{ height: `100%` }} />
   }),
   withScriptjs,
   withGoogleMap
 )((props) => (
   <GoogleMap 
-    defaultZoom={19}
+    defaultZoom={14}
     defaultCenter={ props.marker }
    
   >

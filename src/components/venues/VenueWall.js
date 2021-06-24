@@ -108,7 +108,7 @@ export const VenueWall = () => {
 
     return (
         <>
-                <Form>
+                <Form className={isSwitchOn ? "vibe__toggle__cool" : "vibe__toggle"}>
                     <Form.Check 
                         type="switch"
                         id="custom-switch"

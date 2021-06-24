@@ -3,6 +3,8 @@ import { Dropdown, Badge, Form } from "react-bootstrap";
 import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./NavBar.css"
 import { ShareContext } from "../shared/ShareProvider";
+import VibeHuntBanner from "../images/VibeHunt-tiled.jpg";
+
 
 export const NavBar = () => {
     const { favorites, getFavorites } = useContext(FavoritesContext)
@@ -44,7 +46,7 @@ export const NavBar = () => {
     return (
     <nav className="nav_bar">
         <div className="vibehunt_title">
-            VibeHunt
+            <img src={VibeHuntBanner} width="260rem" height="60rem" />
         </div>
         <div className="dropdown_holder">
             <Dropdown id="vibehunt_dropdown">

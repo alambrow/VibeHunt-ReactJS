@@ -2,9 +2,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
-    background-color: rgb(110, 0, 165, .8);
-    flex-basis: 100%;
-    width: 100%;
+    background-color: rgb(6, 11, 69);
 }
 
 .vibehunt_title {
@@ -14,12 +12,12 @@
 }
 
 #dropdown-basic{
-    background-color: rgba(142, 50, 248, 0.8);
+    background-color: rgba(89, 22, 245, 0.8);
     color:lavenderblush;
     padding: .5rem .6rem;
     border-radius: 10px;
     border: none;
-    margin: .5rem .5rem;
+    margin: 1rem 1rem;
 }
 
 #dropdown-background{
