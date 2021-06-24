@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
 import { VenueInfoContext } from "./VenueInfoProvider"
+import { Form } from "react-bootstrap";
 
 
 export const VenueWall = () => {
@@ -10,6 +11,8 @@ export const VenueWall = () => {
     const [ remoteVenueInfo, setRemoteVenueInfo ] = useState([])
     const [ filteredVenueIds, setFilteredVenueIds ] = useState([])
     const [ filteredVenueDetail, setFilteredVenueDetail] = useState([])
+    const [ vibeSwitch, setVibeSwitch ] = useState()
+    const [ isSwitchOn, setIsSwitchOn ] = useState(false);
    
     useEffect(() => {
         getVenueDetail()
@@ -35,17 +38,43 @@ export const VenueWall = () => {
 
     
     let filteredIdStorage = []
+    
+    
 
     useEffect(() => {
         let localArray = []
         
-        for (let i = 0; i < remoteVenueInfo.length; i++) {
-            if (remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "999") {
-                localArray.push(remoteVenueInfo[i].venue_info.venue_id)
-            } else {
-                localArray.unshift(remoteVenueInfo[i].venue_info.venue_id)
+        const sortedVenueInfo = remoteVenueInfo
+
+        sortedVenueInfo.sort(function (a, b) {
+            return b.analysis.hour_analysis.intensity_nr - a.analysis.hour_analysis.intensity_nr;
+        })
+
+        console.log(sortedVenueInfo, "sorted ven info")
+
+        // TODO: set up condition associated with Vibe Switch
+        setVibeSwitch(localStorage.getItem("vibe_switch"))
+        if (vibeSwitch === true) {
+            debugger
+            for (let i = 0; i < sortedVenueInfo.length; i++) {
+                if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "999" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "2") {
+                    localArray.push(sortedVenueInfo[i].venue_info.venue_id)
+                } else {
+                    localArray.unshift(sortedVenueInfo[i].venue_info.venue_id)
+                }
+            }
+        } else {
+            for (let i = 0; i < sortedVenueInfo.length; i++) {
+                if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "999") {
+                    localArray.push(sortedVenueInfo[i].venue_info.venue_id)
+                } else {
+                    localArray.unshift(sortedVenueInfo[i].venue_info.venue_id)
+                }
             }
         }
+        
+        
+
         filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
         console.log(filteredIdStorage, "filtered id store")
@@ -68,8 +97,33 @@ export const VenueWall = () => {
     }, [filteredVenueIds])
     
     console.log(filteredVenueDetail)
+
+    const onSwitchAction = () => {
+
+        if (isSwitchOn === false) {
+            setIsSwitchOn(true)
+            localStorage.setItem("vibe_switch", true)
+            console.log(localStorage.getItem("vibe_switch"))
+            alert("switched on")
+        } else {
+            setIsSwitchOn(false)
+            localStorage.setItem("vibe_switch", false)
+            console.log(localStorage.getItem("vibe_switch"))
+            alert("switched off")
+        }
+
+    }
+
     return (
         <>
+                <Form>
+                    <Form.Check 
+                        type="switch"
+                        id="custom-switch"
+                        onChange={onSwitchAction}
+                        label="Toogle Cool Mode"
+                    />
+                </Form>
             <div className="venues__info">
                 {   
                     filteredVenueDetail.map(venue => {
