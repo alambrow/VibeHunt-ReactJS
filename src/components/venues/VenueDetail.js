@@ -13,10 +13,10 @@ import { MyMapComponent } from "../map/Map";
 export const VenueDetail = ({venue}) => {
     const { getVenueInfo } = useContext(VenueInfoContext)
     const { favorites, addVenueToFavorites, getFavorites, removeFavorite } = useContext(FavoritesContext)
-    const [ localVenueState, setLocalVenueState ] = useState({})
     const { users, getUsers } = useContext(UserContext)
     const { addShare, shares, getShares, removeShare } = useContext(ShareContext)
     const { notes, addNote, getNotes, deleteNote, updateNote } = useContext(NoteContext)
+    const [ localVenueState, setLocalVenueState ] = useState({})
 
     useEffect(() => {
         getVenueInfo(venue.venId).then((data) => {

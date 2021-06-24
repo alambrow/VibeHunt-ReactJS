@@ -18,7 +18,7 @@ export const ShareProvider = (props) => {
 
     const getShares = () => {
         return fetch("http://localhost:8088/sharedVenues")
-        .then (res => res.json())
+        .then(res => res.json())
         .then(setShares)
     }
 

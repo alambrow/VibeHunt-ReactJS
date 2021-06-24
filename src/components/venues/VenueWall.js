@@ -11,7 +11,6 @@ export const VenueWall = () => {
     const [ remoteVenueInfo, setRemoteVenueInfo ] = useState([])
     const [ filteredVenueIds, setFilteredVenueIds ] = useState([])
     const [ filteredVenueDetail, setFilteredVenueDetail] = useState([])
-    const [ vibeSwitch, setVibeSwitch ] = useState()
     const [ isSwitchOn, setIsSwitchOn ] = useState(false);
    
     useEffect(() => {
@@ -53,9 +52,8 @@ export const VenueWall = () => {
         console.log(sortedVenueInfo, "sorted ven info")
 
         // TODO: set up condition associated with Vibe Switch
-        setVibeSwitch(localStorage.getItem("vibe_switch"))
-        if (vibeSwitch === true) {
-            debugger
+       
+        if (isSwitchOn === true) {
             for (let i = 0; i < sortedVenueInfo.length; i++) {
                 if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "999" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "2") {
                     localArray.push(sortedVenueInfo[i].venue_info.venue_id)
@@ -78,7 +76,7 @@ export const VenueWall = () => {
         filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
         console.log(filteredIdStorage, "filtered id store")
-    }, [remoteVenueInfo])
+    }, [remoteVenueInfo, isSwitchOn])
 
     let filteredVenueDetailStorage = []
 
@@ -102,14 +100,8 @@ export const VenueWall = () => {
 
         if (isSwitchOn === false) {
             setIsSwitchOn(true)
-            localStorage.setItem("vibe_switch", true)
-            console.log(localStorage.getItem("vibe_switch"))
-            alert("switched on")
         } else {
             setIsSwitchOn(false)
-            localStorage.setItem("vibe_switch", false)
-            console.log(localStorage.getItem("vibe_switch"))
-            alert("switched off")
         }
 
     }
@@ -121,10 +113,10 @@ export const VenueWall = () => {
                         type="switch"
                         id="custom-switch"
                         onChange={onSwitchAction}
-                        label="Toogle Cool Mode"
+                        label="Toggle Cool Mode"
                     />
                 </Form>
-            <div className="venues__info">
+            <div className={isSwitchOn ? "venues__info__cool" : "venues__info"}>
                 {   
                     filteredVenueDetail.map(venue => {
                         return <VenueDetail venue={venue} />
