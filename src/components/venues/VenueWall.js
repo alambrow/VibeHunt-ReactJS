@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
 import { VenueInfoContext } from "./VenueInfoProvider"
-import { Form } from "react-bootstrap";
+import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export const VenueWall = () => {
@@ -106,14 +106,26 @@ export const VenueWall = () => {
 
     }
 
+    const renderTip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Cool mode pushes quieter bars to the top of the list
+        </Tooltip>
+    )
+
     return (
         <>
                 <Form className={isSwitchOn ? "vibe__toggle__cool" : "vibe__toggle"}>
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 200, hide: 200 }}
+                        overlay={renderTip}
+                    >
+                        <div className="cool_mode_descript">Toggle Cool Mode</div>
+                    </OverlayTrigger>
                     <Form.Check 
                         type="switch"
                         id="custom-switch"
                         onChange={onSwitchAction}
-                        label="Toggle Cool Mode"
                     />
                 </Form>
             <div className={isSwitchOn ? "venues__info__cool" : "venues__info"}>
