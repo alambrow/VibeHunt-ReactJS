@@ -191,7 +191,7 @@ export const VenueDetail = ({venue}) => {
             if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
                     <>
-                    <button className="note_delete_button" onClick={handleShow}>Edit</button>
+                    <button className="note_editMe_button" onClick={handleShow}>Edit</button>
 
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Body>
@@ -275,11 +275,9 @@ export const VenueDetail = ({venue}) => {
     const [venAdd,] = venue.address.split(",")
     return (
         <div className="venue_card">
-        <div className="venue_map_flex">
-            <div className="venue_flex_left">
+            <MyMapComponent isMarkerShown marker={{ lat: venue.lat, lng: venue.long }} />
             <div className="venue_name">{venue.name}</div>
             <div className="venue_address">{venAdd}</div>
-            
             <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
                 <div className="venue_vibe">
                     <ProgressBar animated now={intensity_display} variant="warning" />
@@ -322,13 +320,8 @@ export const VenueDetail = ({venue}) => {
                         </Accordion.Collapse>
                     </Card>
                     </Accordion>
-                </div>
-                <div className="venue_flex_right">
-                    <div className="map_box">
-                        <MyMapComponent isMarkerShown marker={{ lat: venue.lat, lng: venue.long }} />
-                    </div>
-                </div>
-            </div>
+               
+            
         </div>
     )
 }

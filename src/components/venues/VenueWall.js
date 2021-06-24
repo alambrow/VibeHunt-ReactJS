@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
 import { VenueInfoContext } from "./VenueInfoProvider"
-import { Form } from "react-bootstrap";
+import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 
 export const VenueWall = () => {
@@ -38,20 +38,16 @@ export const VenueWall = () => {
     
     let filteredIdStorage = []
     
-    
-
     useEffect(() => {
         let localArray = []
         
         const sortedVenueInfo = remoteVenueInfo
 
         sortedVenueInfo.sort(function (a, b) {
-            return b.analysis.hour_analysis.intensity_nr - a.analysis.hour_analysis.intensity_nr;
+            return a.analysis.hour_analysis.intensity_nr - b.analysis.hour_analysis.intensity_nr;
         })
 
         console.log(sortedVenueInfo, "sorted ven info")
-
-        // TODO: set up condition associated with Vibe Switch
        
         if (isSwitchOn === true) {
             for (let i = 0; i < sortedVenueInfo.length; i++) {
@@ -70,8 +66,6 @@ export const VenueWall = () => {
                 }
             }
         }
-        
-        
 
         filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
@@ -106,14 +100,26 @@ export const VenueWall = () => {
 
     }
 
+    const renderTip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Cool mode pushes quieter bars to the top of the list
+        </Tooltip>
+    )
+
     return (
         <>
-                <Form>
+                <Form className={isSwitchOn ? "vibe__toggle__cool" : "vibe__toggle"}>
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 200, hide: 200 }}
+                        overlay={renderTip}
+                    >
+                        <div className="cool_mode_descript">Toggle Cool Mode</div>
+                    </OverlayTrigger>
                     <Form.Check 
                         type="switch"
                         id="custom-switch"
                         onChange={onSwitchAction}
-                        label="Toggle Cool Mode"
                     />
                 </Form>
             <div className={isSwitchOn ? "venues__info__cool" : "venues__info"}>
