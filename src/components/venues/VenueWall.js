@@ -39,13 +39,23 @@ export const VenueWall = () => {
     useEffect(() => {
         let localArray = []
         
-        for (let i = 0; i < remoteVenueInfo.length; i++) {
-            if (remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "999") {
-                localArray.push(remoteVenueInfo[i].venue_info.venue_id)
+        const sortedVenueInfo = remoteVenueInfo
+
+        sortedVenueInfo.sort(function (a, b) {
+            return b.analysis.hour_analysis.intensity_nr - a.analysis.hour_analysis.intensity_nr;
+        })
+
+        console.log(sortedVenueInfo, "sorted ven info")
+
+        for (let i = 0; i < sortedVenueInfo.length; i++) {
+            if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "999") {
+                localArray.push(sortedVenueInfo[i].venue_info.venue_id)
             } else {
-                localArray.unshift(remoteVenueInfo[i].venue_info.venue_id)
+                localArray.unshift(sortedVenueInfo[i].venue_info.venue_id)
             }
         }
+
+        
         filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
         console.log(filteredIdStorage, "filtered id store")
