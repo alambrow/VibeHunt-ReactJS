@@ -13,24 +13,32 @@ export const VenueWall = () => {
    
     useEffect(() => {
         getVenueDetail()
-        console.log(venueDetail, "original ven detail")
     }, [])
 
 
+    let venueInfoStorage = []
+
     useEffect(() => {
-        let localArray = []
+        let promises = []
         for (let i = 0; i < venueDetail.length; i++) {
-            getVenueInfo(venueDetail[i].venId).then((data) => {
-                localArray.push(data)
-            })
+            let venueFetchCall = getVenueInfo(venueDetail[i].venId)
+            promises.push(venueFetchCall)
         }
-        setRemoteVenueInfo(localArray)
-        console.log(remoteVenueInfo, "remote ven info")
+     
+        Promise.all(promises)
+            .then((data) => {
+                venueInfoStorage = data
+                setRemoteVenueInfo(data)
+                console.log(venueInfoStorage, "local info store")
+            })
     }, [venueDetail])
 
     
+    let filteredIdStorage = []
+
     useEffect(() => {
         let localArray = []
+        
         for (let i = 0; i < remoteVenueInfo.length; i++) {
             if (remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || remoteVenueInfo[i].analysis.hour_analysis.intensity_nr === "999") {
                 localArray.push(remoteVenueInfo[i].venue_info.venue_id)
@@ -38,9 +46,12 @@ export const VenueWall = () => {
                 localArray.unshift(remoteVenueInfo[i].venue_info.venue_id)
             }
         }
+        filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
-        console.log(filteredVenueIds, "filtered ven ids")
+        console.log(filteredIdStorage, "filtered id store")
     }, [remoteVenueInfo])
+
+    let filteredVenueDetailStorage = []
 
     useEffect(() => {
         let localArray = []
@@ -51,16 +62,17 @@ export const VenueWall = () => {
                 }
             }
         }
+        filteredVenueDetailStorage = localArray
         setFilteredVenueDetail(localArray)
-        console.log(filteredVenueDetail, "filtered ven detail")
+        console.log(filteredVenueDetailStorage, "filtered venue store")
     }, [filteredVenueIds])
     
-
+    console.log(filteredVenueDetail)
     return (
         <>
             <div className="venues__info">
                 {   
-                    venueDetail.map(venue => {
+                    filteredVenueDetail.map(venue => {
                         return <VenueDetail venue={venue} />
                     })
                 }
