@@ -6,12 +6,14 @@
     display: flex;
     flex-direction: row-reverse;
     background-color: rgb(45, 51, 59);
+    padding: .5rem 0rem 0rem 0rem;
 }
 
 .vibe__toggle__cool {
     display: flex;
     flex-direction: row-reverse;
-    background-color: rgb(75, 55, 145);
+    background-color: rgba(30, 5, 155, 0.9);
+    padding: .5rem 0rem 0rem 0rem;
 }
 
 .cool_mode_descript {
@@ -26,7 +28,7 @@
 }
 
 .venues__info__cool {
-    background-color: rgb(75, 55, 145);
+    background-color: rgba(30, 5, 155, 0.9);
     padding: .1rem 1rem;
 }
 
@@ -35,7 +37,7 @@
     border-radius: 10px;
     margin: .5rem 0rem .5rem 0rem;
     padding: 1rem;
-    background-color: rgba(64, 26, 136, .2);
+    background-color: rgba(64, 26, 136, .6);
     color: lavenderblush;
     width: 21.5rem;
 }
@@ -96,10 +98,30 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    background-color: lavenderblush;
+    color:rgb(6, 11, 69);
+    padding: .5rem;
+    border-radius: 10px;
 }
 
 .note_user {
     text-decoration: underline;
+}
+
+.note_editMe_button {
+    background-color: teal;
+    border: none;
+    border-radius: 10px;
+    color: lavenderblush;
+    font-weight: 450;
+}
+
+.note_delete_button {
+    background-color: rgba(30, 5, 155, 0.9);
+    border: none;
+    border-radius: 10px;
+    color: lavenderblush;
+    font-weight: 450;
 }
 
 .card-header {
@@ -109,7 +131,7 @@
 }
 
 .card-body {
-    background-color: rgb(6, 11, 69);
+    background-color: rgb(55, 35, 145, 0.8);
     padding: -1rem;
 }
 

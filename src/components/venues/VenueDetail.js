@@ -191,7 +191,7 @@ export const VenueDetail = ({venue}) => {
             if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
                     <>
-                    <button className="note_delete_button" onClick={handleShow}>Edit</button>
+                    <button className="note_editMe_button" onClick={handleShow}>Edit</button>
 
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Body>

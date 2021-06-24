@@ -3,6 +3,7 @@
     flex-flow: row wrap;
     justify-content: flex-end;
     background-color: rgb(6, 11, 69);
+    border-bottom: rgb(255, 202, 44) solid 1px;
 }
 
 .vibehunt_title {
@@ -12,12 +13,13 @@
 }
 
 #dropdown-basic{
-    background-color: rgba(89, 22, 245, 0.8);
-    color:lavenderblush;
-    padding: .5rem .6rem;
+    background-color: rgba(128, 202, 169);
+    padding: .5rem .5rem;
     border-radius: 10px;
     border: none;
     margin: 1rem 1rem;
+    color:rgb(45, 51, 59);
+    font-weight: 600;
 }
 
 #dropdown-background{

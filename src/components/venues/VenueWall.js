@@ -38,20 +38,16 @@ export const VenueWall = () => {
     
     let filteredIdStorage = []
     
-    
-
     useEffect(() => {
         let localArray = []
         
         const sortedVenueInfo = remoteVenueInfo
 
         sortedVenueInfo.sort(function (a, b) {
-            return b.analysis.hour_analysis.intensity_nr - a.analysis.hour_analysis.intensity_nr;
+            return a.analysis.hour_analysis.intensity_nr - b.analysis.hour_analysis.intensity_nr;
         })
 
         console.log(sortedVenueInfo, "sorted ven info")
-
-        // TODO: set up condition associated with Vibe Switch
        
         if (isSwitchOn === true) {
             for (let i = 0; i < sortedVenueInfo.length; i++) {
@@ -70,8 +66,6 @@ export const VenueWall = () => {
                 }
             }
         }
-        
-        
 
         filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
