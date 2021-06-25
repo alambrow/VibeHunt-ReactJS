@@ -32,7 +32,6 @@ export const Shares = () => {
 
     useEffect(() => {
         let localVenDetail = []
-        
         for (let i = 0; i < sharedWithMe.length; i++) {
             for (let n = 0; n < venueDetail.length; n++) {
                 if (sharedWithMe[i].venueId === venueDetail[n].id) {
@@ -45,7 +44,6 @@ export const Shares = () => {
 
     useEffect(() => {
         let my_Shares = []
-    
         for (let i = 0; i < shares.length; i++) {
             if (shares[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 my_Shares.push(shares[i])
@@ -64,20 +62,11 @@ export const Shares = () => {
                 }
             }
         }
-
-        // for (let i = 0; i < my_SharesArray1.length; i++) {
-        //     debugger
-        //     if (my_SharesArray1[i].venId == my_SharesArray1[i+1].venId) {
-        //         delete my_SharesArray1[i+1]
-        //     }
-        // }
-
         for(let i = 0; i < my_SharesArray1.length; i++) {
             if (my_SharesArray2.indexOf(my_SharesArray1[i]) === -1) {
                 my_SharesArray2.push(my_SharesArray1[i])
             }
         }
-
         setMySharesArray(my_SharesArray2)
     }, [myShares])
 

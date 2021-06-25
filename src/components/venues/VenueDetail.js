@@ -47,17 +47,17 @@ export const VenueDetail = ({venue}) => {
         if (intensity === 2) {
             SetItensity_display(100)
         } else if (intensity === 1) {
-            SetItensity_display(80)
+            SetItensity_display(75)
         } else if (intensity === 0) {
-            SetItensity_display(60)
+            SetItensity_display(50)
         } else if (intensity === -1) {
-            SetItensity_display(40)
+            SetItensity_display(35)
         } else if (intensity === -2) {
             SetItensity_display(20)
         } else {
             SetItensity_display(5)
         }
-    })
+    }, [localVenueState])
 
     // Code for Favoriting
     const showFavoriteButton = (venueId) => {
@@ -76,7 +76,6 @@ export const VenueDetail = ({venue}) => {
                 event.preventDefault()
                 handleFavoriteVenue(venueId)
             }}>Favorite</button>
-          
         )
     }
 
@@ -93,15 +92,12 @@ export const VenueDetail = ({venue}) => {
 
     // Code for share button/creating shares
     const displayUserDropdownItems = () => {
-
         let usersArray = []
-
         for (let i = 0; i < users.length; i++) {
             if (users[i].id !== parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 usersArray.push(users[i])
             }
         }
-
         return (
         <Dropdown id="vibehunt_dropdown"
         onSelect={handleSelect}
@@ -117,14 +113,12 @@ export const VenueDetail = ({venue}) => {
     }
 
     const userListItem = (user) => {
-
         let htmlX = ""
         for (let i = 0; i < shares.length; i++) {
             if (shares[i].recipientId === parseInt(user.id) && shares[i].venueId) {
                 htmlX += "[X]"
             }
         }
-
         return (
             <>
             <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}  {htmlX}</Dropdown.Item>
@@ -150,7 +144,7 @@ export const VenueDetail = ({venue}) => {
         alert("Shared!")
     }
 
-
+    const [notePlaceholder, setNotePlaceholder] = useState("Current vibe")
     const saveNote = (venueID) => {
             if (document.querySelector(`input[name='${venueID}']`).value === "") {
                 document.querySelector(`input[name='${venueID}']`).style.background = "#fc7878"
@@ -161,19 +155,17 @@ export const VenueDetail = ({venue}) => {
                     venueId: venueID,
                     note: document.querySelector(`input[name='${venueID}']`).value,
                 })
-            }
-            
+                setNotePlaceholder(null)
+                
+            }  
     }
 
  
 
     const [show, setShow] = useState(false);
     const displayEditNoteButton = (noteObj) => {
-
-
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
-
         const editNote = () => {
             if (document.querySelector(`input[name='note_edit']`).value === "") {
                 return
@@ -187,13 +179,11 @@ export const VenueDetail = ({venue}) => {
                 setShow(false)
             }
         }
-
         for (let i = 0; i < notes.length; i++) {
             if (notes[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
                 return (
                     <>
                     <button className="note_editMe_button" onClick={handleShow}>Edit</button>
-
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Body>
                         <form className="venue_notes" >
@@ -239,7 +229,6 @@ export const VenueDetail = ({venue}) => {
     
     const displaySavedNote = (venueId) => {
         let localNotes = []
-
         for (let i = 0; i < notes.length; i++) {
             if (notes[i].venueId === venueId) {
                 localNotes.push(notes[i])
@@ -250,14 +239,12 @@ export const VenueDetail = ({venue}) => {
             <>
             {
                 localNotes.map((note) => {
-
                     let Username = "nomen nescio"
                     for (let i = 0; i < users.length; i++) {
                         if (parseInt(users[i].id) === parseInt(note.userId)) {
                             Username = users[i].userName
                         }
                     }
-                    
                     return (
                         <div className="note_card">
                             <div className="note_user">{Username}:</div>
@@ -310,7 +297,7 @@ export const VenueDetail = ({venue}) => {
             {renderMap(positObj)}
             <div className="venue_name">{venue.name}</div>
             <div className="venue_address">{venAdd}</div>
-            <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
+            <div className="venue_open">Vibe status: {localVenueState.intensity_txt}</div>
                 <div className="venue_vibe">
                     <ProgressBar animated now={intensity_display} variant="warning" />
                 </div>
@@ -325,11 +312,11 @@ export const VenueDetail = ({venue}) => {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="0">
                         <Card.Body>
-
                         <form className="venue_notes" >
                             <input name={venue.id}
                                 className="form-control"
-                                placeholder="current vibe"
+                                placeholder={notePlaceholder}
+                                
                             />
                             <button className="add_note_button"
                                 onClick={event => {
@@ -337,7 +324,6 @@ export const VenueDetail = ({venue}) => {
                                     saveNote(venue.id)
                                 }}>Add Note</button>
                         </form>
-
                         </Card.Body>
                         </Accordion.Collapse>
                     </Card>
@@ -352,7 +338,7 @@ export const VenueDetail = ({venue}) => {
                         </Accordion.Collapse>
                     </Card>
                     </Accordion>
-               
+
             
         </div>
     )
