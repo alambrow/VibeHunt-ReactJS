@@ -40,8 +40,7 @@ export const VenueWall = () => {
     
     useEffect(() => {
         let localArray = []
-        
-        const sortedVenueInfo = remoteVenueInfo
+        let sortedVenueInfo = remoteVenueInfo
 
         sortedVenueInfo.sort(function (a, b) {
             return a.analysis.hour_analysis.intensity_nr - b.analysis.hour_analysis.intensity_nr;
@@ -51,10 +50,10 @@ export const VenueWall = () => {
        
         if (isSwitchOn === true) {
             for (let i = 0; i < sortedVenueInfo.length; i++) {
-                if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "N/A" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "999" || sortedVenueInfo[i].analysis.hour_analysis.intensity_nr === "2") {
-                    localArray.push(sortedVenueInfo[i].venue_info.venue_id)
-                } else {
+                if (sortedVenueInfo[i].analysis.hour_analysis.intensity_nr <= 0) {
                     localArray.unshift(sortedVenueInfo[i].venue_info.venue_id)
+                } else {
+                    localArray.push(sortedVenueInfo[i].venue_info.venue_id)
                 }
             }
         } else {

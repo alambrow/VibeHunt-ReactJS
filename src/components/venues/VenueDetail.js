@@ -22,7 +22,7 @@ export const VenueDetail = ({venue}) => {
         getVenueInfo(venue.venId).then((data) => {
             setLocalVenueState(data.analysis.hour_analysis)
         })
-    }, [])
+    }, [venue])
    
     useEffect(() => {
         getFavorites()
@@ -40,23 +40,24 @@ export const VenueDetail = ({venue}) => {
         getNotes()
     }, [])
 
+    const [intensity_display, SetItensity_display] = useState([])
 
-    const intensity = parseInt(localVenueState.intensity_nr)
-    let intensity_display = 0
-
-    if (intensity === 2) {
-        intensity_display = 100
-    } else if (intensity === 1) {
-        intensity_display = 80
-    } else if (intensity === 0) {
-        intensity_display = 60
-    } else if (intensity === -1) {
-        intensity_display = 40
-    } else if (intensity === -2) {
-        intensity_display = 20
-    } else {
-        intensity_display = 5
-    }
+    useEffect(() => {
+        const intensity = parseInt(localVenueState.intensity_nr)
+        if (intensity === 2) {
+            SetItensity_display(100)
+        } else if (intensity === 1) {
+            SetItensity_display(80)
+        } else if (intensity === 0) {
+            SetItensity_display(60)
+        } else if (intensity === -1) {
+            SetItensity_display(40)
+        } else if (intensity === -2) {
+            SetItensity_display(20)
+        } else {
+            SetItensity_display(5)
+        }
+    })
 
     // Code for Favoriting
     const showFavoriteButton = (venueId) => {
@@ -271,11 +272,42 @@ export const VenueDetail = ({venue}) => {
         )
     }
 
+    // const [venLat, setVenLat] = useState([])
+    // const [venLong, setVenLong] = useState([])
+    const [venAdd, setVenAdd] = useState([])
+    const [positObj, setPositObj] = useState({})
 
-    const [venAdd,] = venue.address.split(",")
+    // useEffect(() => {
+    //     setVenLat(venue.lat)
+    // }, [venue, localVenueState])
+
+    // useEffect(() => {
+    //     setVenLong(venue.long)
+    // }, [venue, localVenueState])
+    
+    useEffect(() => {
+        const [venAddress,] = venue.address.split(",")
+        setVenAdd(venAddress)
+    }, [venue])
+
+    useEffect(() => {
+        let thisLocat = {
+            lat: venue.lat,
+            lng: venue.long
+        }
+        setPositObj(thisLocat)
+    }, [venue])
+
+    
+    const renderMap = (pObj) => {
+        return (
+            <MyMapComponent marker={pObj} key={new Date().getTime()} />
+        )
+    }
+
     return (
         <div className="venue_card">
-            <MyMapComponent isMarkerShown marker={{ lat: venue.lat, lng: venue.long }} />
+            {renderMap(positObj)}
             <div className="venue_name">{venue.name}</div>
             <div className="venue_address">{venAdd}</div>
             <div className="venue_open">Current vibe: {localVenueState.intensity_txt}</div>
