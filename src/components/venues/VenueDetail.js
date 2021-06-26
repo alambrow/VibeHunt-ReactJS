@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueInfoContext } from "./VenueInfoProvider"
 import { FavoritesContext } from "../favorites/FavoritesProvider"
 import "./venues.css"
-import { Dropdown, ProgressBar } from "react-bootstrap";
+import { Dropdown, ProgressBar, Badge } from "react-bootstrap";
 import { UserContext } from "../auth/UserProvider";
 import { ShareContext } from "../shared/ShareProvider";
 import { NoteContext } from "../notes/NoteProvider";
@@ -116,12 +116,14 @@ export const VenueDetail = ({venue}) => {
         let htmlX = ""
         for (let i = 0; i < shares.length; i++) {
             if (shares[i].recipientId === parseInt(user.id) && shares[i].venueId) {
-                htmlX += "[X]"
+                htmlX += "X"
             }
         }
         return (
             <>
-            <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}  {htmlX}</Dropdown.Item>
+            <Dropdown.Item className="dropdown-item" eventKey={user.id}>{user.userName}  
+            {'   '}<Badge variant="secondary">{htmlX}</Badge>
+            </Dropdown.Item>
             <Dropdown.Divider />
             </>
             )
@@ -159,8 +161,6 @@ export const VenueDetail = ({venue}) => {
                 
             }  
     }
-
- 
 
     const [show, setShow] = useState(false);
     const displayEditNoteButton = (noteObj) => {
@@ -297,7 +297,7 @@ export const VenueDetail = ({venue}) => {
             {renderMap(positObj)}
             <div className="venue_name">{venue.name}</div>
             <div className="venue_address">{venAdd}</div>
-            <div className="venue_open">Vibe status: {localVenueState.intensity_txt}</div>
+            <div className="venue_open">Vibe level: {localVenueState.intensity_txt}</div>
                 <div className="venue_vibe">
                     <ProgressBar animated now={intensity_display} variant="warning" />
                 </div>
@@ -316,7 +316,6 @@ export const VenueDetail = ({venue}) => {
                             <input name={venue.id}
                                 className="form-control"
                                 placeholder={notePlaceholder}
-                                
                             />
                             <button className="add_note_button"
                                 onClick={event => {
