@@ -9,7 +9,9 @@ import VibeHuntBanner from "../images/VibeHunt-tiled.jpg";
 export const NavBar = () => {
     const { favorites, getFavorites } = useContext(FavoritesContext)
     const { shares, getShares } = useContext(ShareContext)
-    const [ isSwitchOn, setIsSwitchOn ] = useState(false);
+    const [myFavorites, setMyFavorites] = useState([])
+    const [sharedWithMe, setSharedWithMe] = useState([])
+    const [myShares, setMyShares] = useState([])
 
     useEffect(() => {
         getFavorites()
@@ -19,29 +21,35 @@ export const NavBar = () => {
         getShares()
     }, [])
 
-    let myFavorites = 0
-
-    for (let i = 0; i < favorites.length; i++){
-        if (favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))){
-            myFavorites++
+    useEffect(() => {
+        let my_Favorites = 0
+        for (let i = 0; i < favorites.length; i++){
+            if (favorites[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))){
+                my_Favorites++
+            }
         }
-    }
+        setMyFavorites(my_Favorites)
+    }, [favorites])
 
-    let sharedWithMe = 0
-
-    for (let i = 0; i < shares.length; i++) {
-        if (shares[i].recipientId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
-            sharedWithMe++
+    useEffect(() => {
+        let shared_withMe = 0
+        for (let i = 0; i < shares.length; i++) {
+            if (shares[i].recipientId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+                shared_withMe++
+            }
         }
-    }
+        setSharedWithMe(shared_withMe)
+    }, [shares])
 
-    let myShares = 0
-
-    for (let i = 0; i < shares.length; i++) {
-        if (shares[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
-            myShares++
+    useEffect(() => {
+        let my_Shares = 0
+        for (let i = 0; i < shares.length; i++) {
+            if (shares[i].userId === parseInt(localStorage.getItem("vibehunt_memberId"))) {
+                my_Shares++
+            }
         }
-    }
+        setMyShares(my_Shares)
+    }, [shares])
 
     return (
     <nav className="nav_bar">
@@ -58,7 +66,6 @@ export const NavBar = () => {
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/favorites">
                             Favorite Venues <Badge variant="light">{myFavorites}</Badge>
-                            
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item className="dropdown-item" href="/shared_venues">
