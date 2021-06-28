@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react"
 import { VenueDetail } from "./VenueDetail"
 import { VenueDetailContext } from "./VenueDetailProvider"
 import { VenueInfoContext } from "./VenueInfoProvider"
-import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Form, OverlayTrigger, Tooltip, Col } from "react-bootstrap";
 
 
 export const VenueWall = () => {
-    const { venueDetail, getVenueDetail } = useContext(VenueDetailContext)
+    const { venueDetail, getVenueDetail, setSearchTerms, searchTerms } = useContext(VenueDetailContext)
     const { getVenueInfo } = useContext(VenueInfoContext)
     const [ remoteVenueInfo, setRemoteVenueInfo ] = useState([])
     const [ filteredVenueIds, setFilteredVenueIds ] = useState([])
@@ -17,26 +17,17 @@ export const VenueWall = () => {
         getVenueDetail()
     }, [])
 
-
-    let venueInfoStorage = []
-
     useEffect(() => {
         let promises = []
         for (let i = 0; i < venueDetail.length; i++) {
             let venueFetchCall = getVenueInfo(venueDetail[i].venId)
             promises.push(venueFetchCall)
         }
-     
         Promise.all(promises)
             .then((data) => {
-                venueInfoStorage = data
                 setRemoteVenueInfo(data)
-                console.log(venueInfoStorage, "local info store")
             })
     }, [venueDetail])
-
-    
-    let filteredIdStorage = []
     
     useEffect(() => {
         let localArray = []
@@ -45,8 +36,6 @@ export const VenueWall = () => {
         sortedVenueInfo.sort(function (a, b) {
             return a.analysis.hour_analysis.intensity_nr - b.analysis.hour_analysis.intensity_nr;
         })
-
-        console.log(sortedVenueInfo, "sorted ven info")
        
         if (isSwitchOn === true) {
             for (let i = 0; i < sortedVenueInfo.length; i++) {
@@ -65,13 +54,8 @@ export const VenueWall = () => {
                 }
             }
         }
-
-        filteredIdStorage = localArray
         setFilteredVenueIds(localArray)
-        console.log(filteredIdStorage, "filtered id store")
     }, [remoteVenueInfo, isSwitchOn])
-
-    let filteredVenueDetailStorage = []
 
     useEffect(() => {
         let localArray = []
@@ -82,21 +66,21 @@ export const VenueWall = () => {
                 }
             }
         }
-        filteredVenueDetailStorage = localArray
-        setFilteredVenueDetail(localArray)
-        console.log(filteredVenueDetailStorage, "filtered venue store")
-    }, [filteredVenueIds])
-    
-    console.log(filteredVenueDetail)
+        if (searchTerms !== "") {
+            const newSearchTerms = searchTerms.toLowerCase()
+            const subset = localArray.filter(venue => venue.name.toLowerCase().includes(newSearchTerms))
+            setFilteredVenueDetail(subset)
+        } else {
+            setFilteredVenueDetail(localArray)
+        }
+    }, [filteredVenueIds, searchTerms])
 
     const onSwitchAction = () => {
-
         if (isSwitchOn === false) {
             setIsSwitchOn(true)
         } else {
             setIsSwitchOn(false)
         }
-
     }
 
     const renderTip = (props) => (
@@ -107,20 +91,32 @@ export const VenueWall = () => {
 
     return (
         <>
-                <Form className={isSwitchOn ? "vibe__toggle__cool" : "vibe__toggle"}>
-                    <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 200, hide: 200 }}
-                        overlay={renderTip}
-                    >
+            <Form className={isSwitchOn ? "vibe__toggle__cool" : "vibe__toggle"}>
+                <Form.Row className="toggle__flex__outer">
+                    <Col className="toggle__flex" xs={6}>
+                        <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 200, hide: 200 }}
+                            overlay={renderTip}
+                        >
                         <div className="cool_mode_descript">Toggle Cool Mode</div>
-                    </OverlayTrigger>
-                    <Form.Check 
-                        type="switch"
-                        id="custom-switch"
-                        onChange={onSwitchAction}
-                    />
-                </Form>
+                        </OverlayTrigger>
+                        <Form.Check 
+                            type="switch"
+                            id="custom-switch"
+                            onChange={onSwitchAction}
+                        />
+                    </Col>
+                    <Col>
+                        <Form.Control 
+                        type="search" 
+                        placeholder="Search" 
+                        className="search_box" 
+                        onKeyUp={(event) => setSearchTerms(event.target.value)}
+                        />
+                    </Col>
+                </Form.Row>
+            </Form>
             <div className={isSwitchOn ? "venues__info__cool" : "venues__info"}>
                 {   
                     filteredVenueDetail.map(venue => {
