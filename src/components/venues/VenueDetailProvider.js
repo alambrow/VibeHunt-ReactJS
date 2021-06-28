@@ -4,6 +4,7 @@ export const VenueDetailContext = createContext()
 
 export const VenueDetailProvider = (props) => {
     const [venueDetail, setVenueDetail] = useState([])
+    const [searchTerms, setSearchTerms] = useState("")
 
     const getVenueDetail = () => {
         return fetch("http://localhost:8088/venues")
@@ -20,7 +21,7 @@ export const VenueDetailProvider = (props) => {
 
     return (
         <VenueDetailContext.Provider value={{
-            venueDetail, getVenueDetail, getVenueDetailById
+            venueDetail, getVenueDetail, getVenueDetailById, searchTerms, setSearchTerms
         }}>
             {props.children}
         </VenueDetailContext.Provider>
