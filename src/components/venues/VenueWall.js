@@ -32,7 +32,6 @@ export const VenueWall = () => {
     useEffect(() => {
         let localArray = []
         let sortedVenueInfo = remoteVenueInfo
-
         sortedVenueInfo.sort(function (a, b) {
             return a.analysis.hour_analysis.intensity_nr - b.analysis.hour_analysis.intensity_nr;
         })
